@@ -1,7 +1,8 @@
 import React, { createContext } from 'react'
 
 import { Store } from './Store'
-import { Subscribe, extractProviders } from './Subscribe'
+import { Subscribe } from './Subscribe'
+import { extractProviders } from './extractProviders'
 import { isFunction } from './isFunction'
 
 const { Provider: ContextProvider, Consumer } = createContext()
@@ -11,7 +12,7 @@ export class Provider extends React.Component {
     providers:
       (this.props.values &&
         this.props.values.map(
-          Instance => new Instance(this.props.values)
+          Instance => new Instance()
         )) ||
       []
   }
