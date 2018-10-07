@@ -1,0 +1,41 @@
+{
+  "name": "deviation",
+  "version": "0.0.2",
+  "description": "",
+  "main": "fuse.js",
+  "scripts": {
+    "test": "mocha --opts mocha.opts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-epic/deviation.git"
+  },
+  "author": "clitetailor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-epic/deviation/issues"
+  },
+  "homepage": "https://github.com/react-epic/deviation#readme",
+  "dependencies": {
+    "react": "^16.5.2",
+    "rxjs": "^6.3.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jsdom": "^12.1.0",
+    "mocha": "^5.2.0",
+    "react-dom": "^16.5.2",
+    "sinon": "^6.3.5"
+  }
+}

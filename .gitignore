@@ -1,0 +1,11 @@
+.fusebox
+.cache
+dist
+node_modules
+
+shrinkwrap.yaml
+
+# TSConfig can be generated automatically from FuseBox
+tsconfig.json
+
+.nyc_output
