@@ -1,4 +1,12 @@
-# Deviation
+<div align="center">
+  
+  # Deviation
+
+  <img src="images/Deviation2.png" alt="Deviation" width=36% height=36% />
+
+  Featured DI System for React 🎁🏠
+
+</div>
 
 ## Install
 
@@ -15,9 +23,9 @@ $ yarn add deviation
 $ npm add deviation
 ```
 
-## What is Deviation
+## What is Deviation?
 
-Deviation is a library that trying to stimulate Angular DI model into React using RxJS and React Context API. Here is our example
+Deviation is a library that trying to stimulate Angular DI model into React using RxJS and React Context API. Here is our example:
 
 ```jsx
 ReactDOM.render(
@@ -26,6 +34,18 @@ ReactDOM.render(
   </Provider>,
   document.querySelector('#root')
 )
+
+export class TodoStore extends Store {
+  state = {
+    todos: []
+  }
+
+  addTodo(newTodo) {
+    this.setState(({ todos }) => ({
+      todos: todos.concat([newTodo])
+    }))
+  }
+}
 
 @Deviate({
   todoStore: TodoStore
@@ -47,5 +67,3 @@ export class TodoApp extends React.Component {
   }
 }
 ```
-
-By doing this, Deviation is comparable to React Epic by its simplicity. It has a great advantage over React Epic that you don't have to understand much about RxJS or write a lot of streams and logics in RxJS to make your app works.
