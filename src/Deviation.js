@@ -11,9 +11,10 @@ export class Provider extends React.Component {
   state = {
     providers:
       (this.props.values &&
-        this.props.values.map(
-          Instance => new Instance()
-        )) ||
+        this.props.values.reduce((prevProviders, Instance) => {
+          prevProviders.push(new Instance(prevProviders))
+          return prevProviders
+        }, [])) ||
       []
   }
 
