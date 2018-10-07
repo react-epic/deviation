@@ -6,13 +6,13 @@ You can install Deviation by either using PNPM, Yarn or NPM:
 
 ```bash
 # PNPM
-$ pnpm add react-epic
+$ pnpm add deviation
 
 # Yarn
-$ yarn add react-epic
+$ yarn add deviation
 
 # NPM
-$ npm add react-epic
+$ npm add deviation
 ```
 
 ## What is Deviation
