@@ -1,52 +1,15 @@
 import React from 'react'
+import { Subject } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 
-import { combineSubscriptions } from './combineSubscriptions'
-
-export class Registry {
-  constructor({ notifier }) {
-    this.notifier = notifier
-    this.subscription = null
-  }
-
-  setProviders(injectableProviders) {
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-
-    this.subscription = combineSubscriptions(
-      Object.keys(injectableProviders).map(key => {
-        injectableProviders[key].setState.notifier.subscribe(
-          providerState =>
-            this.notifier({
-              [key]: providerState
-            })
-        )
-      })
-    )
-  }
-
-  unsubscribe() {
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-  }
-}
-
-export function extractProviders(providers, injectables) {
-  return Object.keys(injectables)
-    .map(key => ({
-      [key]: providers.find(
-        provider => provider.constructor === injectables[key]
-      )
-    }))
-    .reduce((props, next) => Object.assign(props, next), {})
-}
+import { extractProviders } from './extractProviders'
+import { combineProviders } from './combineProviders'
 
 /**
  * Use `PureComponent` to avoid additional rendering when providers
  * and injectables don't change.
  */
-export class Subscribe extends React.PureComponent {
+export class Subscribe extends React.Component {
   state = {
     childProps: extractProviders(
       this.props.providers,
@@ -54,39 +17,29 @@ export class Subscribe extends React.PureComponent {
     )
   }
 
-  componentDidMount() {
-    this.registry = new Registry({
-      notifier: this.updateChildProps
-    })
+  injectableProviders = new Subject()
+  subscription = null
 
-    this.registry.setProviders(this.state.childProps)
+  componentDidMount() {
+    this.subscription = this.injectableProviders
+      .pipe(
+        switchMap(injectableProviders =>
+          combineProviders(injectableProviders)
+        )
+      )
+      .subscribe(this.onStateChange)
+
+    this.injectableProviders.next(this.state.childProps)
   }
 
-  updateChildProps = providerStateWrapper => {
-    this.setState(state => {
-      /**
-       * Clone `childProps`.
-       */
-      const childProps = Object.assign({}, state.childProps)
-
-      for (const key of Object.keys(providerStateWrapper)) {
-        /**
-         * Clone updated provider and provide it with a new state.
-         */
-        childProps[key] = Object.assign(
-          {},
-          /**
-           * Assign the provider with its new state.
-           */
-          childProps[key],
-          providerStateWrapper
-        )
-      }
-
-      return {
-        childProps
-      }
-    })
+  onStateChange = storeWrapper => {
+    this.setState(state => ({
+      childProps: Object.assign(
+        {},
+        state.childProps,
+        storeWrapper
+      )
+    }))
   }
 
   render() {
@@ -110,13 +63,11 @@ export class Subscribe extends React.PureComponent {
         injectables
       )
 
-      this.registry.setProviders(injectableProviders)
-
-      this.setState({ childProps: injectableProviders })
+      this.injectableProviders.next(injectableProviders)
     }
   }
 
   unsubscribe() {
-    this.registry.unsubscribe()
+    this.subscription.unsubscribe()
   }
 }

@@ -4,17 +4,27 @@ import { createMountPoint } from './TodoApp'
 
 describe('Deviate', () => {
   describe('TodoApp', () => {
-    it('should add new todo', () => {
+    it('should add new todos', () => {
       const wrapper = createMountPoint()
 
-      const newTodo = 'Make this test works!'
-      const todoList = wrapper.find('#todo-list')
+      const newTodos = [
+        'Make this test works',
+        'Fix the bugs',
+        'Deploy the library',
+        'Close issues'
+      ]
+
       const addTodoButton = wrapper.find('#add-todo')
 
-      addTodoButton.prop('onClick')(newTodo)
-      addTodoButton.prop('onClick')(newTodo)
+      for (const todo of newTodos) {
+        addTodoButton.prop('onClick')(todo)
+      }
 
-      expect(todoList.find('.item')).to.have.lengthOf(2)
+      wrapper.update()
+
+      expect(
+        wrapper.find('#todo-list').find('li')
+      ).to.have.lengthOf(newTodos.length)
     })
   })
 })

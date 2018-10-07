@@ -1,5 +1,6 @@
 import React, { createContext } from 'react'
 
+import { Store } from './Store'
 import { Subscribe, extractProviders } from './Subscribe'
 import { isFunction } from './isFunction'
 
@@ -7,13 +8,16 @@ const { Provider: ContextProvider, Consumer } = createContext()
 
 export class Provider extends React.Component {
   state = {
-    providers: this.props.providers.map(
-      Instance => new Instance()
-    )
+    providers:
+      (this.props.values &&
+        this.props.values.map(
+          Instance => new Instance(this.props.values)
+        )) ||
+      []
   }
 
   componentDidMount() {
-    for (const provider of this.state.providers) {
+    for (const provider of this.props.values) {
       if (
         provider &&
         provider.providerDidMount &&
@@ -72,7 +76,7 @@ export function Deviate(injectables, mergeProps) {
 
       return DeviatedComponent
     } else {
-      class DeviatedComponent extends WrappedComponent {
+      class DeviatedStore extends WrappedComponent {
         constructor(providers) {
           const injectableProviders = extractProviders(
             providers,
@@ -83,7 +87,7 @@ export function Deviate(injectables, mergeProps) {
         }
       }
 
-      return DeviatedComponent
+      return DeviatedStore
     }
   }
 }

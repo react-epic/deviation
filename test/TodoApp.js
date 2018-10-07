@@ -1,19 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { noop } from 'rxjs'
 
 import { Deviate, Provider } from '../src/Deviation'
 import { Store } from '../src/Store'
-import { noop } from 'rxjs'
-
-class ErrorBoundary extends React.Component {
-  componentDidCatch(error, info) {
-    console.log(error, info)
-  }
-
-  render() {
-    return this.props.children
-  }
-}
 
 export class TodoStore extends Store {
   state = {
@@ -21,9 +11,9 @@ export class TodoStore extends Store {
   }
 
   addTodo = todo => {
-    this.setState({
-      todos: this.state.todos.concat([todo])
-    })
+    this.setState(state => ({
+      todos: state.todos.concat([todo])
+    }))
   }
 }
 
@@ -37,18 +27,11 @@ export class TodoApp extends React.Component {
     return (
       <div>
         <ul id="todo-list">
-          {todoStore &&
-            todoStore.state &&
-            todoStore.state.todos.map((todo, key) => (
-              <li className="item" key={key}>
-                {todo}
-              </li>
-            ))}
+          {todoStore.state.todos.map((todo, key) => (
+            <li key={key}>{todo}</li>
+          ))}
         </ul>
-        <button
-          id="add-todo"
-          onClick={(todoStore && todoStore.addTodo) || noop}
-        >
+        <button id="add-todo" onClick={todoStore.addTodo}>
           Add Todo
         </button>
       </div>
@@ -58,7 +41,7 @@ export class TodoApp extends React.Component {
 
 export function createMountPoint() {
   return mount(
-    <Provider providers={[TodoStore]}>
+    <Provider values={[TodoStore]}>
       <TodoApp />
     </Provider>
   )
