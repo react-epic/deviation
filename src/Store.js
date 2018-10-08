@@ -13,7 +13,12 @@ export class Store {
   setState = func => {
     if (isFunction(func)) {
       this.state = func(this.state)
-      this.setState.notifier.next(Object.assign({}, this))
+      this.setState.notifier.next(
+        Object.assign(
+          Object.create(this.constructor),
+          this
+        )
+      )
     } else {
       const newState = func
       this.state = newState

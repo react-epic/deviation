@@ -2,10 +2,11 @@ import { expect } from 'chai'
 
 import { createMountPoint } from './TodoApp'
 
-describe('Deviate', () => {
+describe('Deviation', () => {
   describe('TodoApp', () => {
     it('should add new todos', () => {
       const wrapper = createMountPoint()
+      const addTodoButton = wrapper.find('#add-todo')
 
       const newTodos = [
         'Make this test works',
@@ -13,8 +14,6 @@ describe('Deviate', () => {
         'Deploy the library',
         'Close issues'
       ]
-
-      const addTodoButton = wrapper.find('#add-todo')
 
       for (const todo of newTodos) {
         addTodoButton.prop('onClick')(todo)

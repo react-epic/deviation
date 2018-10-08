@@ -2,9 +2,7 @@
   
   # Deviation
 
-  <img src="images/Deviation2.png" alt="Deviation" width=36% height=36% />
-
-  Featured DI System for React 🎁🏠
+Featured DI System for React 🎁🏠
 
 </div>
 
@@ -29,9 +27,9 @@ Deviation is a library that trying to stimulate Angular DI model into React usin
 
 ```jsx
 ReactDOM.render(
-  <Provider values={[TodoStore, HttpProvider]}>
+  <Deviation providers={[TodoStore, HttpProvider]}>
     <TodoApp />
-  </Provider>,
+  </Deviation>,
   document.querySelector('#root')
 )
 
@@ -47,7 +45,7 @@ export class TodoStore extends Store {
   }
 }
 
-@Deviate({
+@Inject({
   todoStore: TodoStore
 })
 export class TodoApp extends React.Component {

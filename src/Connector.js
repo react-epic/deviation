@@ -9,7 +9,7 @@ import { combineProviders } from './combineProviders'
  * Use `PureComponent` to avoid additional rendering when providers
  * and injectables don't change.
  */
-export class Subscribe extends React.Component {
+export class Connector extends React.Component {
   state = {
     childProps: extractProviders(
       this.props.providers,
@@ -22,11 +22,7 @@ export class Subscribe extends React.Component {
 
   componentDidMount() {
     this.subscription = this.injectableProviders
-      .pipe(
-        switchMap(injectableProviders =>
-          combineProviders(injectableProviders)
-        )
-      )
+      .pipe(switchMap(combineProviders))
       .subscribe(this.onStateChange)
 
     this.injectableProviders.next(this.state.childProps)
@@ -63,6 +59,10 @@ export class Subscribe extends React.Component {
         injectables
       )
 
+      /**
+       * Allows re-injecting the providers. The providers need to be
+       * re-instantiated to be re-injected.
+       */
       this.injectableProviders.next(injectableProviders)
     }
   }

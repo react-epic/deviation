@@ -1,8 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { noop } from 'rxjs'
 
-import { Deviate, Provider } from '../src/Deviation'
+import { Inject, Deviation } from '../src/Deviation'
 import { Store } from '../src/Store'
 
 export class TodoStore extends Store {
@@ -17,7 +16,7 @@ export class TodoStore extends Store {
   }
 }
 
-@Deviate({
+@Inject({
   todoStore: TodoStore
 })
 export class TodoApp extends React.Component {
@@ -41,8 +40,8 @@ export class TodoApp extends React.Component {
 
 export function createMountPoint() {
   return mount(
-    <Provider values={[TodoStore]}>
+    <Deviation providers={[TodoStore]}>
       <TodoApp />
-    </Provider>
+    </Deviation>
   )
 }
