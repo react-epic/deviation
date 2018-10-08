@@ -2,7 +2,7 @@ import { expect } from 'chai'
 
 import { createMountPoint } from './CountTodos'
 
-describe('StoreInject', () => {
+describe('Internal DI', () => {
   describe('CountTodos', () => {
     it('should update store dependency state', () => {
       const wrapper = createMountPoint()

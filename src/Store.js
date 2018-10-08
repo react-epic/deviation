@@ -14,10 +14,7 @@ export class Store {
     if (isFunction(func)) {
       this.state = func(this.state)
       this.setState.notifier.next(
-        Object.assign(
-          Object.create(this.constructor),
-          this
-        )
+        Object.assign(Object.create(this.constructor), this)
       )
     } else {
       const newState = func
@@ -25,8 +22,12 @@ export class Store {
       this.setState.notifier.next(Object.assign({}, this))
     }
   }
+
+  providerDidMount() {}
+
+  providerWillUnmount() {}
 }
 
 export function isStore(provider) {
-  return true
+  return provider instanceof Store
 }

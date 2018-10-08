@@ -5,6 +5,7 @@ import { Connector } from './Connector'
 import { extractProviders } from './extractProviders'
 import { InjectProvider } from './InjectProvider'
 import { isSubClass } from './isSubClass'
+import { isFunction } from './isFunction'
 
 const { Provider, Consumer } = createContext()
 
@@ -33,7 +34,9 @@ export class Deviation extends React.Component {
   }
 
   componentDidMount() {
-    for (const store of this.state.providers) {
+    const providers = Array.from(this.state.providers.values())
+
+    for (const store of providers) {
       if (
         store &&
         store.constructor &&
@@ -45,6 +48,12 @@ export class Deviation extends React.Component {
         )
       }
     }
+
+    for (const store of providers) {
+      if (isFunction(store.providerDidMount)) {
+        store.providerDidMount()
+      }
+    }
   }
 
   render() {
@@ -54,6 +63,16 @@ export class Deviation extends React.Component {
         {children}
       </Provider>
     )
+  }
+
+  componentWillUnmount() {
+    const providers = Array.from(this.state.providers.values())
+
+    for (const store of providers) {
+      if (isFunction(store.providerWillUnmount)) {
+        store.providerWillUnmount()
+      }
+    }
   }
 }
 
@@ -107,12 +126,17 @@ export function Inject(injectables, mergeProps) {
           super(mergeProps(injectableProviders, props))
         }
 
+        static debug(arg) {
+          console.log(arg)
+          return arg
+        }
+
         static updateProviders(store, providers) {
           store.props = Object.assign(
             store.props,
             mergeProps(
               extractProviders(providers, injectables),
-              store.props
+              { providers }
             )
           )
         }
