@@ -96,13 +96,13 @@ task('build:node', async context => {
       }),
       QuantumPlugin({
         target: 'npm',
-        bakeApiIntoBundle: 'react-epic',
+        bakeApiIntoBundle: 'deviation',
         containedAPI: true
       })
     ]
   })
 
-  fuse.bundle('react-epic').instructions(`> [index.js]`)
+  fuse.bundle('deviation').instructions(`> [index.js]`)
   await fuse.run()
 })
 
@@ -122,6 +122,6 @@ task('build:umd', async context => {
     ]
   })
 
-  fuse.bundle('react-epic.umd').instructions(`> [index.js]`)
+  fuse.bundle('deviation.umd').instructions(`> [index.js]`)
   await fuse.run()
 })

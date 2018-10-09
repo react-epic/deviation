@@ -6,7 +6,7 @@ describe('Internal DI', () => {
   describe('CountTodos', () => {
     it('should update store dependency state', () => {
       const wrapper = createMountPoint()
-      const addTodoButton = wrapper.find('#add-todo')
+      const todoInput = wrapper.find('#todo-input')
 
       const newTodos = [
         'Make this test works',
@@ -16,7 +16,12 @@ describe('Internal DI', () => {
       ]
 
       for (const todo of newTodos) {
-        addTodoButton.prop('onClick')(todo)
+        todoInput.prop('onKeyDown')({
+          code: 'Enter',
+          target: {
+            value: todo
+          }
+        })
       }
 
       const todoCounter = wrapper.find('#todo-counter')

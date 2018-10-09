@@ -38,6 +38,7 @@ export class TodoStore extends Store {
 
 ReactDOM.render(
   <Deviation providers={[TodoStore]}>
+
     <TodoApp />
   </Deviation>,
   document.querySelector('#root')

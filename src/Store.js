@@ -23,11 +23,7 @@ export class Store {
     }
   }
 
-  providerDidMount() {}
+  storeDidMount() {}
 
-  providerWillUnmount() {}
-}
-
-export function isStore(provider) {
-  return provider instanceof Store
+  storeWillUnmount() {}
 }

@@ -1,9 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Inject, Deviation } from '../src/Deviation'
-import { ErrorBoundary } from './ErrorBoundary'
-import { Store } from '../src/Store'
+import { Inject, Deviation, Store } from '../src'
 
 @Inject({
   bTalk: () => BTalk
@@ -13,7 +11,7 @@ export class ATalk extends Store {
     received: false
   }
 
-  providerDidMount() {
+  storeDidMount() {
     this.send()
   }
 
@@ -34,7 +32,7 @@ export class BTalk extends Store {
     received: false
   }
 
-  providerDidMount() {
+  storeDidMount() {
     this.send()
   }
 
@@ -65,10 +63,8 @@ export class CommunicateApp extends React.Component {
 
 export function createMountPoint() {
   return mount(
-    <ErrorBoundary>
-      <Deviation providers={[ATalk, BTalk]}>
-        <CommunicateApp />
-      </Deviation>
-    </ErrorBoundary>
+    <Deviation providers={[ATalk, BTalk]}>
+      <CommunicateApp />
+    </Deviation>
   )
 }
