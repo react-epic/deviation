@@ -6,7 +6,7 @@ describe('Deviation', () => {
   describe('TodoApp', () => {
     it('should add new todos', () => {
       const wrapper = createMountPoint()
-      const addTodoButton = wrapper.find('#add-todo')
+      const todoInput = wrapper.find('#todo-input')
 
       const newTodos = [
         'Make this test works',
@@ -16,7 +16,12 @@ describe('Deviation', () => {
       ]
 
       for (const todo of newTodos) {
-        addTodoButton.prop('onClick')(todo)
+        todoInput.prop('onKeyDown')({
+          code: 'Enter',
+          target: {
+            value: todo
+          }
+        })
       }
 
       wrapper.update()

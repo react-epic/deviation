@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 
 import { Deviation, Inject } from '../src/Deviation'
 import { Store } from '../src/Store'
+import { enter } from './enter'
 
 export class CounterStore extends Store {
   state = {
@@ -36,16 +37,25 @@ export class TodoStore extends Store {
   todoStore: TodoStore
 })
 export class CountTodos extends React.Component {
+  handleSubmit = event => {
+    this.props.todoStore.addTodo(event.target.value)
+  }
+
   render() {
     const { counterStore } = this.props
-    const { todoStore } = this.props
 
     return (
       <div>
         <p id="todo-counter">{counterStore.state.counter}</p>
-        <button id="add-todo" onClick={todoStore.addTodo}>
-          Add Todo
-        </button>
+
+        <div>
+          <label htmlFor="new-todo">New Todo:</label>
+          <input
+            name="new-todo"
+            id="todo-input"
+            onKeyDown={enter(this.handleSubmit)}
+          />
+        </div>
       </div>
     )
   }
