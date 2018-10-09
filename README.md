@@ -1,8 +1,6 @@
 <div align="center">
   
-  # Deviation
-
-Featured DI System for React 🎁🏠
+  <img src="images/DeviationBackground.png" width="100%" alt="Deviation"/>
 
 </div>
 
@@ -23,7 +21,7 @@ $ npm add deviation
 
 ## What is Deviation?
 
-Deviation is a library that trying to stimulate Angular DI model into React using RxJS and React Context API. Here is our example:
+Deviation is a library that trying to simulate Angular DI model into React using RxJS and React Context API. Here is our example:
 
 ```jsx
 ReactDOM.render(
@@ -32,18 +30,6 @@ ReactDOM.render(
   </Deviation>,
   document.querySelector('#root')
 )
-
-export class TodoStore extends Store {
-  state = {
-    todos: []
-  }
-
-  addTodo(newTodo) {
-    this.setState(({ todos }) => ({
-      todos: todos.concat([newTodo])
-    }))
-  }
-}
 
 @Inject({
   todoStore: TodoStore
@@ -59,7 +45,14 @@ export class TodoApp extends React.Component {
             <li>{todo}</li>
           ))}
         </ul>
-        <button onClick={todoStore.addTodo}>Add Todo</button>
+        <div>
+          <label for="new-todo">New Todo:</label>
+          <input
+            name="new-todo"
+            type="input"
+            onKeyDown={enter(todoStore.addTodo)}
+          />
+        </div>
       </div>
     )
   }
