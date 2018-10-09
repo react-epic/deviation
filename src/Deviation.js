@@ -3,7 +3,7 @@ import React, { createContext } from 'react'
 import { Store } from './Store'
 import { Connector } from './Connector'
 import { extractProviders } from './extractProviders'
-import { InjectProvider } from './InjectProvider'
+import { StoreInjector } from './StoreInjector'
 import { isSubClass } from './isSubClass'
 import { isFunction } from './isFunction'
 
@@ -27,7 +27,7 @@ export class Deviation extends React.Component {
   }
 
   instantiate(Instance, providers) {
-    if (isSubClass(Instance, InjectProvider)) {
+    if (isSubClass(Instance, StoreInjector)) {
       return new Instance(this)
     }
     return new Instance({ providers })
@@ -50,8 +50,8 @@ export class Deviation extends React.Component {
     }
 
     for (const store of providers) {
-      if (isFunction(store.providerDidMount)) {
-        store.providerDidMount()
+      if (isFunction(store.storeDidMount)) {
+        store.storeDidMount()
       }
     }
   }
@@ -69,8 +69,8 @@ export class Deviation extends React.Component {
     const providers = Array.from(this.state.providers.values())
 
     for (const store of providers) {
-      if (isFunction(store.providerWillUnmount)) {
-        store.providerWillUnmount()
+      if (isFunction(store.storeWillUnmount)) {
+        store.storeWillUnmount()
       }
     }
   }
@@ -124,11 +124,6 @@ export function Inject(injectables, mergeProps) {
           )
 
           super(mergeProps(injectableProviders, props))
-        }
-
-        static debug(arg) {
-          console.log(arg)
-          return arg
         }
 
         static updateProviders(store, providers) {

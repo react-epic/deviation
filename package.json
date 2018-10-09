@@ -4,7 +4,8 @@
   "description": "",
   "main": "fuse.js",
   "scripts": {
-    "test": "mocha --opts mocha.opts"
+    "test": "mocha --opts mocha.opts",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "enzyme-adapter-react-16": "^1.6.0",
     "jsdom": "^12.1.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
     "react-dom": "^16.5.2",
     "sinon": "^6.3.5"
   }

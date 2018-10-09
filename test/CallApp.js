@@ -2,8 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { ajax } from 'rxjs/ajax'
 
-import { Store } from '../src/Store'
-import { Inject, Deviation } from '../src/Deviation'
+import { Inject, Deviation, Store } from '../src'
 
 export class CallService extends Store {
   makeAPhoneCall() {

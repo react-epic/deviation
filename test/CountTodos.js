@@ -1,8 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Deviation, Inject } from '../src/Deviation'
-import { Store } from '../src/Store'
+import { Deviation, Inject, Store } from '../src'
 import { enter } from './enter'
 
 export class CounterStore extends Store {

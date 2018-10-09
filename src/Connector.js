@@ -67,7 +67,9 @@ export class Connector extends React.Component {
     }
   }
 
-  unsubscribe() {
-    this.subscription.unsubscribe()
+  componentWillUnmount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 }

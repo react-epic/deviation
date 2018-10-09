@@ -1,8 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Inject, Deviation } from '../src/Deviation'
-import { Store } from '../src/Store'
+import { Inject, Deviation, Store } from '../src'
 import { enter } from './enter'
 
 export class TodoStore extends Store {
