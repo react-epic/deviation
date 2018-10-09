@@ -142,7 +142,7 @@ mount(
     Extractor
   ]}>
     <AppComponent />
-  </Extractor>
+  </Deviation>
 )
 
 const phoneStore = Extractor.getStore(PhoneStore)
