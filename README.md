@@ -24,6 +24,8 @@ $ npm add deviation
 Deviation is a library that trying to simulate Angular DI model into React using RxJS and React Context API. Here is our example:
 
 ```jsx
+import { Deviation, Store, Inject } from 'deviation'
+
 export class TodoStore extends Store {
   state = {
     todos: []
@@ -38,7 +40,6 @@ export class TodoStore extends Store {
 
 ReactDOM.render(
   <Deviation providers={[TodoStore]}>
-
     <TodoApp />
   </Deviation>,
   document.querySelector('#root')
@@ -67,7 +68,7 @@ export class TodoApp extends React.Component {
           <input
             name="new-todo"
             type="input"
-            onKeyDown={enter(todoStore.addTodo)}
+            onKeyDown={enter(this.handleSubmit)}
           />
         </div>
       </div>
@@ -108,12 +109,20 @@ Sometimes, you may need Cyclic Dependency Injection. Deviation also provides you
 @Inject({
   storeA: () => StoreA
 })
-export class StoreB extends Store {}
+export class StoreB extends Store {
+  get storeA() {
+    return this.props.storeA
+  }
+}
 
 @Inject({
   storeB: () => StoreB
 })
-export class StoreA extends Store {}
+export class StoreA extends Store {
+  get storeB() {
+    return this.props.storeB
+  }
+}
 ```
 
 ## Testing
@@ -137,10 +146,7 @@ import { createStoreExtractor } from 'deviation'
 const Extractor = createStoreExtractor()
 
 mount(
-  <Deviation providers={[
-    PhoneStore,
-    Extractor
-  ]}>
+  <Deviation providers={[PhoneStore, Extractor]}>
     <AppComponent />
   </Deviation>
 )
