@@ -1,8 +1,6 @@
 <div align="center">
   
-  # Deviation
-
-Featured DI System for React 🎁🏠
+  <img src="images/DeviationBackground.png" width="100%" alt="Deviation"/>
 
 </div>
 
@@ -23,16 +21,9 @@ $ npm add deviation
 
 ## What is Deviation?
 
-Deviation is a library that trying to stimulate Angular DI model into React using RxJS and React Context API. Here is our example:
+Deviation is a library that trying to simulate Angular DI model into React using RxJS and React Context API. Here is our example:
 
 ```jsx
-ReactDOM.render(
-  <Deviation providers={[TodoStore, HttpProvider]}>
-    <TodoApp />
-  </Deviation>,
-  document.querySelector('#root')
-)
-
 export class TodoStore extends Store {
   state = {
     todos: []
@@ -45,10 +36,21 @@ export class TodoStore extends Store {
   }
 }
 
+ReactDOM.render(
+  <Deviation providers={[TodoStore]}>
+    <TodoApp />
+  </Deviation>,
+  document.querySelector('#root')
+)
+
 @Inject({
   todoStore: TodoStore
 })
 export class TodoApp extends React.Component {
+  handleSubmit = event => {
+    this.props.todoStore.addTodo(event.target.value)
+  }
+
   render() {
     const { todoStore } = this.props
 
@@ -59,9 +61,88 @@ export class TodoApp extends React.Component {
             <li>{todo}</li>
           ))}
         </ul>
-        <button onClick={todoStore.addTodo}>Add Todo</button>
+        <div>
+          <label for="new-todo">New Todo:</label>
+          <input
+            name="new-todo"
+            type="input"
+            onKeyDown={enter(todoStore.addTodo)}
+          />
+        </div>
       </div>
     )
   }
 }
+```
+
+## Store DI
+
+We can also use DI to inject directly store into store:
+
+```jsx
+@Inject({
+  balanceStore: BalanceStore
+})
+export class ContractStore extends Store {}
+```
+
+Remember, stores are injected in order. For example:
+
+```jsx
+ReactDOM.render(
+  <Deviation providers={[BalanceStore, ContractStore]}>
+    <TodoApp />
+  </Deviation>,
+  document.querySelector('#root')
+)
+```
+
+In this example, `BalanceStore` will be injected before `ContractStore`. However, if `ContractStore` is placed behind `BalanceStore` in the list of providers: `[BalanceStore, ContractStore]`, then after `ContractStore` constructor is called and before `storeDidMount` is called, `BalanceStore` will be injected into `ContractStore`.
+
+## Lazy DI and Cyclic DI
+
+Sometimes, you may need Cyclic Dependency Injection. Deviation also provides you with Cyclic DI:
+
+```jsx
+@Inject({
+  storeA: () => StoreA
+})
+export class StoreB extends Store {}
+
+@Inject({
+  storeB: () => StoreB
+})
+export class StoreA extends Store {}
+```
+
+## Testing
+
+To test on a single Store method is easy. You just have to stub or spy on that method:
+
+```jsx
+export class PhoneStore extends Store {
+  makeAPhoneCall() {}
+}
+
+const spy = sinon.spy(PhoneStore.prototype.makeAPhoneCall)
+expect(spy.calledOnce).to.be.true
+```
+
+However, we are more likely to extract the store instance from the providers. In that case, we can create a store extractor that can help us to extract any store instance from `Deviation`:
+
+```jsx
+import { createStoreExtractor } from 'deviation'
+
+const Extractor = createStoreExtractor()
+
+mount(
+  <Deviation providers={[
+    PhoneStore,
+    Extractor
+  ]}>
+    <AppComponent />
+  </Extractor>
+)
+
+const phoneStore = Extractor.getStore(PhoneStore)
 ```
