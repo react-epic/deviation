@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { createMountPoint } from './TodoApp'
+import { createMountPoint } from './prepare/TodoApp'
 
 describe('Deviation', () => {
   describe('TodoApp', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Inject, Deviation, Store } from '../src'
+import { Inject, Deviation, Store } from '../../src'
 
 @Inject({
   bTalk: () => BTalk
