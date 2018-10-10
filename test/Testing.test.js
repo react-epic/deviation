@@ -7,7 +7,7 @@ import {
   CallService,
   createMountPoint,
   CallApp
-} from './CallApp'
+} from './prepare/CallApp'
 import { createStoreExtractor, Deviation } from '../src'
 
 describe('Testing', () => {

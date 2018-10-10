@@ -5,12 +5,14 @@ import { isSubClass } from './isSubClass'
 export function extractProviders(providers, injectables) {
   return Object.keys(injectables)
     .map(key => ({
-      [key]: providers.get(loadInjectable(injectables[key]))
+      [key]: providers.get(
+        loadInjectable(injectables[key], providers)
+      )
     }))
     .reduce((props, next) => Object.assign(props, next), {})
 }
 
-export function loadInjectable(injectable) {
+export function loadInjectable(injectable, providers) {
   if (isFunction(injectable)) {
     if (isSubClass(injectable, Store)) {
       return injectable
@@ -19,7 +21,7 @@ export function loadInjectable(injectable) {
     /**
      * Lazy load dependency.
      */
-    return injectable()
+    return injectable(providers)
   }
   return noop
 }

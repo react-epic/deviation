@@ -1,39 +1,51 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Inject, Deviation, Store } from '../src'
+import { Deviation, Inject, Store } from '../../src'
 import { enter } from './enter'
 
+export class CounterStore extends Store {
+  state = {
+    counter: 0
+  }
+
+  increment = () => {
+    this.setState(({ counter }) => ({ counter: counter + 1 }))
+  }
+}
+
+@Inject({
+  counterStore: CounterStore
+})
 export class TodoStore extends Store {
   state = {
     todos: []
   }
 
-  addTodo = todo => {
-    this.setState(state => ({
-      todos: state.todos.concat([todo])
+  addTodo = newTodo => {
+    this.props.counterStore.increment()
+
+    this.setState(({ todos }) => ({
+      todos: [...todos, newTodo]
     }))
   }
 }
 
 @Inject({
+  counterStore: CounterStore,
   todoStore: TodoStore
 })
-export class TodoApp extends React.Component {
+export class CountTodos extends React.Component {
   handleSubmit = event => {
     this.props.todoStore.addTodo(event.target.value)
   }
 
   render() {
-    const { todoStore } = this.props
+    const { counterStore } = this.props
 
     return (
       <div>
-        <ul id="todo-list">
-          {todoStore.state.todos.map((todo, key) => (
-            <li key={key}>{todo}</li>
-          ))}
-        </ul>
+        <p id="todo-counter">{counterStore.state.counter}</p>
 
         <div>
           <label htmlFor="new-todo">New Todo:</label>
@@ -50,8 +62,8 @@ export class TodoApp extends React.Component {
 
 export function createMountPoint() {
   return mount(
-    <Deviation providers={[TodoStore]}>
-      <TodoApp />
+    <Deviation providers={[CounterStore, TodoStore]}>
+      <CountTodos />
     </Deviation>
   )
 }

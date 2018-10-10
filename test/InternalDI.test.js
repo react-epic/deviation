@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { createMountPoint } from './CountTodos'
+import { createMountPoint } from './prepare/CountTodos'
 
 describe('Internal DI', () => {
   describe('CountTodos', () => {
