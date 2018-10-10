@@ -34,22 +34,11 @@ export class Deviation extends React.Component {
   }
 
   componentDidMount() {
-    const providers = Array.from(this.state.providers.values())
+    const providers = this.state.providers
 
-    for (const store of providers) {
-      if (
-        store &&
-        store.constructor &&
-        store.constructor.updateProviders
-      ) {
-        store.constructor.updateProviders(
-          store,
-          this.state.providers
-        )
-      }
-    }
+    this.updateProviders(providers)
 
-    for (const store of providers) {
+    for (const [provider, store] of providers) {
       if (isFunction(store.storeDidMount)) {
         store.storeDidMount()
       }
@@ -65,10 +54,43 @@ export class Deviation extends React.Component {
     )
   }
 
-  componentWillUnmount() {
-    const providers = Array.from(this.state.providers.values())
+  updateProviders(providers) {
+    /**
+     * `setState` only notifies changes to components. This method
+     * notifies changes to the stores.
+     */
+    for (const [provider, store] of providers) {
+      if (
+        store &&
+        store.constructor &&
+        store.constructor.updateProviders
+      ) {
+        store.constructor.updateProviders(
+          store,
+          this.state.providers
+        )
+      }
+    }
+  }
 
-    for (const store of providers) {
+  componentDidUpdate(prevProps, prevState) {
+    for (let [provider] of prevState) {
+      if (!this.state.providers.has(provider)) {
+        provider.storeWillUnmount()
+      }
+    }
+
+    for (let [provider] of this.state.providers) {
+      if (!prevState.providers.has(provider)) {
+        provider.storeDidMount()
+      }
+    }
+
+    this.updateProviders(this.state.providers)
+  }
+
+  componentWillUnmount() {
+    for (const [provider, store] of providers) {
       if (isFunction(store.storeWillUnmount)) {
         store.storeWillUnmount()
       }

@@ -2,7 +2,7 @@
   "name": "deviation",
   "version": "0.0.3",
   "description": "A DI System for React",
-  "main": "fuse.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha --opts mocha.opts",
     "coverage": "nyc npm run test"
