@@ -4,3 +4,5 @@ export { StoreInjector } from './StoreInjector'
 export { Connector } from './Connector'
 
 export { createStoreExtractor } from './createStoreExtractor'
+export { isSubClassOf } from './isSubClassOf'
+export { findSubClassOf } from './findSubClassOf'
