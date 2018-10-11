@@ -4,7 +4,7 @@ import { Store } from './Store'
 import { Connector } from './Connector'
 import { extractProviders } from './extractProviders'
 import { StoreInjector } from './StoreInjector'
-import { isSubClass } from './isSubClass'
+import { isSubClassOf } from './isSubClassOf'
 import { isFunction } from './isFunction'
 
 const { Provider, Consumer } = createContext()
@@ -27,7 +27,7 @@ export class Deviation extends React.Component {
   }
 
   instantiate(Instance, providers) {
-    if (isSubClass(Instance, StoreInjector)) {
+    if (isSubClassOf(Instance, StoreInjector)) {
       return new Instance(this)
     }
     return new Instance({ providers })
@@ -90,7 +90,7 @@ export class Deviation extends React.Component {
   }
 
   componentWillUnmount() {
-    for (const [provider, store] of providers) {
+    for (const [provider, store] of this.state.providers) {
       if (isFunction(store.storeWillUnmount)) {
         store.storeWillUnmount()
       }
@@ -106,7 +106,7 @@ export function Inject(injectables, mergeProps) {
   mergeProps = mergeProps || defaultMergeProps
 
   return function deviateComponent(WrappedComponent) {
-    if (!isSubClass(WrappedComponent, Store)) {
+    if (!isSubClassOf(WrappedComponent, Store)) {
       class DeviatedComponent extends React.Component {
         state = {}
 

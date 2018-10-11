@@ -2,8 +2,9 @@
   "name": "deviation",
   "version": "0.0.3",
   "description": "A DI System for React",
-  "main": "src/index.js",
+  "main": "dist/deviation.js",
   "scripts": {
+    "build": "node fuse.js build",
     "test": "mocha --opts mocha.opts",
     "coverage": "nyc npm run test"
   },
@@ -17,7 +18,13 @@
     "url": "https://github.com/react-epic/deviation/issues"
   },
   "homepage": "https://github.com/react-epic/deviation#readme",
-  "dependencies": {
+  "keywords": [
+    "deviation",
+    "react",
+    "store",
+    "di"
+  ],
+  "peerDependencies": {
     "react": "^16.5.2",
     "rxjs": "^6.3.3"
   },
@@ -25,6 +32,7 @@
     "babel-core": "^6.26.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -34,10 +42,14 @@
     "chai": "^4.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
+    "fuse-box": "^3.5.0",
     "jsdom": "^12.1.0",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1",
+    "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "sinon": "^6.3.5"
+    "rxjs": "^6.3.3",
+    "sinon": "^6.3.5",
+    "typescript": "^3.1.2"
   }
 }
