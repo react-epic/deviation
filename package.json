@@ -1,6 +1,6 @@
 {
   "name": "deviation",
-  "version": "0.0.2",
+  "version": "0.0.3-0",
   "description": "A DI System for React",
   "main": "dist/deviation.js",
   "scripts": {
