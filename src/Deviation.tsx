@@ -1,36 +1,62 @@
 import React, { createContext } from 'react'
 
-import { Store } from './Store'
+import { Store, StoreLike } from './Store'
 import { Connector } from './Connector'
 import { extractProviders } from './extractProviders'
 import { StoreInjector } from './StoreInjector'
-import { isSubClassOf } from './isSubClassOf'
+import { isVariantOf } from './isVariantOf'
 import { isFunction } from './isFunction'
+import { AnyConstructorType } from './ConstructorType'
 
-const { Provider, Consumer } = createContext()
+export const { Provider, Consumer } = createContext(new Map())
 
-export class Deviation extends React.Component {
-  constructor(props) {
+export interface DeviationProps {
+  providers: AnyConstructorType<Store<any, any>>[]
+  children: JSX.Element
+}
+
+export interface StoreProps {
+  providers: Map<
+    AnyConstructorType<Store<any, any>>,
+    Store<any, any>
+  >
+}
+
+export type StoreMap = Map<
+  AnyConstructorType<StoreLike>,
+  Store<any, any>
+>
+
+export class Deviation extends React.Component<
+  DeviationProps,
+  any
+> {
+  constructor(props: DeviationProps) {
     super(props)
 
     this.state = {
       providers: new Map()
     }
 
-    for (const Instance of this.props.providers) {
+    for (const provider of this.props.providers) {
       const store = this.instantiate(
-        Instance,
+        provider,
         this.state.providers
       )
-      this.state.providers.set(Instance, store)
+      this.state.providers.set(provider, store)
     }
   }
 
-  instantiate(Instance, providers) {
-    if (isSubClassOf(Instance, StoreInjector)) {
-      return new Instance(this)
+  instantiate(
+    provider: AnyConstructorType<Store<any, any>>,
+    providers: StoreMap
+  ): Store<Deviation | StoreProps, any> {
+    if (
+      isVariantOf<StoreInjector<any>>(provider, StoreInjector)
+    ) {
+      return new provider(this)
     }
-    return new Instance({ providers })
+    return new provider({ providers })
   }
 
   componentDidMount() {
@@ -54,7 +80,7 @@ export class Deviation extends React.Component {
     )
   }
 
-  updateProviders(providers) {
+  updateProviders(providers: StoreMap) {
     /**
      * `setState` only notifies changes to components. This method
      * notifies changes to the stores.
@@ -63,9 +89,9 @@ export class Deviation extends React.Component {
       if (
         store &&
         store.constructor &&
-        store.constructor.updateProviders
+        (store.constructor as typeof Store).updateProviders
       ) {
-        store.constructor.updateProviders(
+        ;(store.constructor as typeof Store).updateProviders(
           store,
           this.state.providers
         )
@@ -106,7 +132,7 @@ export function Inject(injectables, mergeProps) {
   mergeProps = mergeProps || defaultMergeProps
 
   return function deviateComponent(WrappedComponent) {
-    if (!isSubClassOf(WrappedComponent, Store)) {
+    if (isVariantOf(WrappedComponent, React.Component)) {
       class DeviatedComponent extends React.Component {
         state = {}
 
@@ -135,7 +161,7 @@ export function Inject(injectables, mergeProps) {
       }
 
       return DeviatedComponent
-    } else {
+    } else if (isVariantOf(WrappedComponent, Store)) {
       class DeviatedStore extends WrappedComponent {
         constructor(props) {
           const { providers } = props
@@ -160,6 +186,8 @@ export function Inject(injectables, mergeProps) {
       }
 
       return DeviatedStore
+    } else {
+      return WrappedComponent
     }
   }
 }

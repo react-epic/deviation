@@ -5,10 +5,6 @@ import { switchMap } from 'rxjs/operators'
 import { extractProviders } from './extractProviders'
 import { combineProviders } from './combineProviders'
 
-/**
- * Use `PureComponent` to avoid additional rendering when providers
- * and injectables don't change.
- */
 export class Connector extends React.Component {
   state = {
     childProps: extractProviders(

@@ -1,4 +1,4 @@
-<div align="center">
+cd <div align="center">
   
   <img src="images/DeviationBackground.png" width="100%" alt="Deviation"/>
 

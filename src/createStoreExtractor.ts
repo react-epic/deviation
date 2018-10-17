@@ -1,7 +1,11 @@
 import { StoreInjector } from './StoreInjector'
+import { StoreLike } from './Store'
+import { StoreMap } from './Deviation'
 
 export function createStoreExtractor() {
-  class Extractor extends StoreInjector {
+  class Extractor extends StoreInjector<{}> {
+    static providers: StoreMap = new Map()
+
     storeDidMount() {
       Extractor.providers = this.props.providers
     }
@@ -14,8 +18,6 @@ export function createStoreExtractor() {
       return this.providers
     }
   }
-
-  Extractor.providers = new Map()
 
   return Extractor
 }
