@@ -1,6 +1,6 @@
 import { Store } from './Store'
 import { isFunction } from './isFunction'
-import { isSubClass } from './isSubClass'
+import { isSubClassOf } from './isSubClassOf'
 
 export function extractProviders(providers, injectables) {
   return Object.keys(injectables)
@@ -14,7 +14,7 @@ export function extractProviders(providers, injectables) {
 
 export function loadInjectable(injectable, providers) {
   if (isFunction(injectable)) {
-    if (isSubClass(injectable, Store)) {
+    if (isSubClassOf(injectable, Store)) {
       return injectable
     }
 

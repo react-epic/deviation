@@ -14,12 +14,20 @@ export class Store {
     if (isFunction(func)) {
       this.state = func(this.state)
       this.setState.notifier.next(
-        Object.assign(Object.create(this.constructor), this)
+        Object.assign(
+          Object.create(this.constructor.prototype),
+          this
+        )
       )
     } else {
       const newState = func
       this.state = newState
-      this.setState.notifier.next(Object.assign({}, this))
+      this.setState.notifier.next(
+        Object.assign(
+          Object.create(this.constructor.prototype),
+          this
+        )
+      )
     }
   }
 
