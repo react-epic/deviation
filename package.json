@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node fuse.js build",
     "test": "mocha --opts mocha.opts",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "deploy": "npm run test && npm run build && npm publish"
   },
   "repository": {
     "type": "git",
