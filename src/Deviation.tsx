@@ -1,37 +1,35 @@
-import React, { createContext } from 'react'
+import * as React from 'react'
 
-import { Store, StoreLike } from './Store'
-import { Connector } from './Connector'
-import { extractProviders } from './extractProviders'
-import { StoreInjector } from './StoreInjector'
-import { isVariantOf } from './isVariantOf'
-import { isFunction } from './isFunction'
+import { isFunction } from 'lodash-es'
+
 import { AnyConstructorType } from './ConstructorType'
+import { StoreMap, loadInjectables } from './Injectable'
+import { Store } from './Store'
+import { StoreInjector } from './StoreInjector'
 
-export const { Provider, Consumer } = createContext(new Map())
+import { isVariantOf } from './isVariantOf'
 
-export interface DeviationProps {
-  providers: AnyConstructorType<Store<any, any>>[]
+export const { Provider, Consumer } = React.createContext(
+  new Map()
+)
+
+export interface IDeviationProps {
+  providers: Array<AnyConstructorType<Store<any, any>>>
   children: JSX.Element
 }
 
-export interface StoreProps {
+export interface IStoreProps {
   providers: Map<
     AnyConstructorType<Store<any, any>>,
     Store<any, any>
   >
 }
 
-export type StoreMap = Map<
-  AnyConstructorType<StoreLike>,
-  Store<any, any>
->
-
 export class Deviation extends React.Component<
-  DeviationProps,
+  IDeviationProps,
   any
 > {
-  constructor(props: DeviationProps) {
+  constructor(props: IDeviationProps) {
     super(props)
 
     this.state = {
@@ -50,10 +48,8 @@ export class Deviation extends React.Component<
   instantiate(
     provider: AnyConstructorType<Store<any, any>>,
     providers: StoreMap
-  ): Store<Deviation | StoreProps, any> {
-    if (
-      isVariantOf<StoreInjector<any>>(provider, StoreInjector)
-    ) {
+  ): Store<Deviation | IStoreProps, any> {
+    if (isVariantOf(provider, StoreInjector)) {
       return new provider(this)
     }
     return new provider({ providers })
@@ -100,13 +96,13 @@ export class Deviation extends React.Component<
   }
 
   componentDidUpdate(prevProps, prevState) {
-    for (let [provider] of prevState) {
+    for (const [provider] of prevState) {
       if (!this.state.providers.has(provider)) {
         provider.storeWillUnmount()
       }
     }
 
-    for (let [provider] of this.state.providers) {
+    for (const [provider] of this.state.providers) {
       if (!prevState.providers.has(provider)) {
         provider.storeDidMount()
       }
@@ -120,74 +116,6 @@ export class Deviation extends React.Component<
       if (isFunction(store.storeWillUnmount)) {
         store.storeWillUnmount()
       }
-    }
-  }
-}
-
-export function defaultMergeProps(injectableProviders, props) {
-  return Object.assign({}, injectableProviders, props)
-}
-
-export function Inject(injectables, mergeProps) {
-  mergeProps = mergeProps || defaultMergeProps
-
-  return function deviateComponent(WrappedComponent) {
-    if (isVariantOf(WrappedComponent, React.Component)) {
-      class DeviatedComponent extends React.Component {
-        state = {}
-
-        render() {
-          return <Consumer>{this.renderContext}</Consumer>
-        }
-
-        renderContext = context => {
-          return (
-            <Connector
-              providers={context}
-              injectables={injectables}
-            >
-              {this.renderProps}
-            </Connector>
-          )
-        }
-
-        renderProps = props => {
-          return (
-            <WrappedComponent
-              {...mergeProps(props, this.props)}
-            />
-          )
-        }
-      }
-
-      return DeviatedComponent
-    } else if (isVariantOf(WrappedComponent, Store)) {
-      class DeviatedStore extends WrappedComponent {
-        constructor(props) {
-          const { providers } = props
-
-          const injectableProviders = extractProviders(
-            providers,
-            injectables
-          )
-
-          super(mergeProps(injectableProviders, props))
-        }
-
-        static updateProviders(store, providers) {
-          store.props = Object.assign(
-            store.props,
-            mergeProps(
-              extractProviders(providers, injectables),
-              { providers }
-            )
-          )
-        }
-      }
-
-      return DeviatedStore
-    } else {
-      return WrappedComponent
     }
   }
 }

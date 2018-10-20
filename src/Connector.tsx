@@ -2,14 +2,23 @@ import React from 'react'
 import { Subject } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
-import { extractProviders } from './extractProviders'
 import { combineProviders } from './combineProviders'
+import { Injectable, StoreMap, loadInjectables } from './Injectable'
 
-export class Connector extends React.Component {
+interface IConnectorProps {
+  providers?: StoreMap
+  injectables?: Record<string, Injectable>
+  children?: React.ReactChildren & ((props) => React.Component)
+}
+
+export class Connector extends React.Component<
+  IConnectorProps,
+  any
+> {
   state = {
-    childProps: extractProviders(
-      this.props.providers,
-      this.props.injectables
+    childProps: loadInjectables(
+      this.props.injectables,
+      this.props.providers
     )
   }
 
@@ -26,11 +35,10 @@ export class Connector extends React.Component {
 
   onStateChange = storeWrapper => {
     this.setState(state => ({
-      childProps: Object.assign(
-        {},
-        state.childProps,
-        storeWrapper
-      )
+      childProps: {
+        ...state.childProps,
+        ...storeWrapper
+      }
     }))
   }
 
@@ -50,9 +58,9 @@ export class Connector extends React.Component {
        * Perform a side-effect. Replace previous registered store with
        * the current store.
        */
-      const injectableProviders = extractProviders(
-        providers,
-        injectables
+      const injectableProviders = loadInjectables(
+        injectables,
+        providers
       )
 
       /**

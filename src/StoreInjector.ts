@@ -1,13 +1,13 @@
+import { Deviation } from './Deviation'
+import { StoreMap } from './Injectable'
 import { Store } from './Store'
 
-import { Deviation } from './Deviation'
-
-interface StoreInjectorProps {
-  providers: Map<typeof Store, Store<any, any>>
+interface IStoreInjectorProps {
+  providers: StoreMap
 }
 
 export class StoreInjector<S> extends Store<
-  StoreInjectorProps,
+  IStoreInjectorProps,
   S
 > {
   constructor(deviation: Deviation) {
