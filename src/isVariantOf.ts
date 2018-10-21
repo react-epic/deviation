@@ -1,11 +1,9 @@
-import { noop } from 'rxjs'
-
 import { AnyConstructorType } from './ConstructorType'
-import { StoreMap } from './Injectable'
+import { IProviderToStoreMap } from './Injectable'
 import { Store } from './Store'
 
 export function isVariantOf<T extends AnyConstructorType<any>>(
-  typeA,
+  typeA: Function,
   typeB: T
 ): typeA is AnyConstructorType<InstanceType<T>> {
   return typeA.prototype instanceof typeB
@@ -13,10 +11,10 @@ export function isVariantOf<T extends AnyConstructorType<any>>(
 
 export function findVariantOf(
   typeA: AnyConstructorType<Store<any, any>>
-) {
-  return (
-    providers: StoreMap
-  ): AnyConstructorType<Store<any, any>> => {
+): ((
+  providers: IProviderToStoreMap
+) => AnyConstructorType<Store<any, any>>) {
+  return providers => {
     for (const [provider] of providers) {
       if (isVariantOf(provider, typeA)) {
         return provider

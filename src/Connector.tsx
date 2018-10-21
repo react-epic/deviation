@@ -1,39 +1,51 @@
-import React from 'react'
-import { Subject } from 'rxjs'
+import * as React from 'react'
+import { Subject, Subscription } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
-import { combineProviders } from './combineProviders'
-import { Injectable, StoreMap, loadInjectables } from './Injectable'
+import {
+  IProviderToStoreMap,
+  IStoreRecord,
+  InjectableRecord,
+  loadInjectables
+} from './Injectable'
+import { Store } from './Store'
 
 interface IConnectorProps {
-  providers?: StoreMap
-  injectables?: Record<string, Injectable>
-  children?: React.ReactChildren & ((props) => React.Component)
+  providers?: IProviderToStoreMap
+  injectables?: InjectableRecord
+  children?: React.ReactChildren &
+    ((props: any) => React.Component)
+}
+
+interface IConnectorState {
+  childProps: IStoreRecord
 }
 
 export class Connector extends React.Component<
   IConnectorProps,
-  any
+  IConnectorState
 > {
-  state = {
+  public state: IConnectorState = {
     childProps: loadInjectables(
       this.props.injectables,
       this.props.providers
     )
   }
 
-  injectableProviders = new Subject()
-  subscription = null
+  public injectableProviders = new Subject<
+    Record<string, Store<any, any>>
+  >()
+  public subscription: Subscription = null
 
-  componentDidMount() {
+  public componentDidMount() {
     this.subscription = this.injectableProviders
-      .pipe(switchMap(combineProviders))
+      .pipe(switchMap(mergeNotifiers))
       .subscribe(this.onStateChange)
 
     this.injectableProviders.next(this.state.childProps)
   }
 
-  onStateChange = storeWrapper => {
+  public onStateChange = storeWrapper => {
     this.setState(state => ({
       childProps: {
         ...state.childProps,
@@ -42,12 +54,12 @@ export class Connector extends React.Component<
     }))
   }
 
-  render() {
+  public render() {
     const { children } = this.props
     return children(this.state.childProps)
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps) {
     const { providers, injectables } = this.props
 
     if (
@@ -62,16 +74,10 @@ export class Connector extends React.Component<
         injectables,
         providers
       )
-
-      /**
-       * Allows re-injecting the providers. The providers need to be
-       * re-instantiated to be re-injected.
-       */
-      this.injectableProviders.next(injectableProviders)
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (this.subscription) {
       this.subscription.unsubscribe()
     }

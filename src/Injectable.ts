@@ -5,14 +5,15 @@ import { Store } from './Store'
 
 import { isVariantOf } from './isVariantOf'
 
-export type StoreMap = Map<
+export type IProviderToStoreMap = Map<
   AnyConstructorType<Store<any, any>>,
   Store<any, any>
 >
+export type IStoreRecord = Record<string, Store<any, any>>
 export type Injectable = AnyConstructorType<Store<any, any>>
 
 export type LazyInjectable = ((
-  providers: StoreMap
+  providers: IProviderToStoreMap
 ) => Injectable | void)
 
 export type HybridInjectable = Injectable | LazyInjectable
@@ -21,15 +22,19 @@ export type InjectableRecord = Record<string, HybridInjectable>
 
 export function loadInjectables(
   injectables: InjectableRecord = {},
-  providers: StoreMap = new Map()
-) {
+  providers: IProviderToStoreMap = new Map()
+): IStoreRecord {
   return transform(
     injectables,
     (injectableProviers, injectable, key) => {
-      const provider = loadInjectable(injectable, providers)
+      const provider = loadInjectable(
+        injectable,
+        providers
+      ) as AnyConstructorType<Store<any, any>>
 
       if (provider) {
-        injectableProviers[key] = providers.get(provider)
+        injectableProviers[key] =
+          providers.get(provider) || new provider()
       }
     },
     {}
@@ -38,8 +43,8 @@ export function loadInjectables(
 
 export function loadInjectable(
   injectable: HybridInjectable,
-  providers: StoreMap
-) {
+  providers: IProviderToStoreMap
+): void | Injectable {
   if (isFunction(injectable)) {
     if (isVariantOf(injectable, Store)) {
       return injectable

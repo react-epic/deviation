@@ -1,64 +1,32 @@
-import { isFunction } from 'lodash-es'
 import { Subject } from 'rxjs'
 
-import { StoreMap } from './Injectable'
+import { IProviderToStoreMap } from './Injectable'
 
-export const notifier = Symbol('notifier')
-
-export interface IStoreSetState<S> {
-  notifier: Subject<S>
-  (a: S | ((S) => S)): void
-}
+export const notifier: unique symbol = Symbol('notifier')
 
 export class Store<P = {}, S = {}> {
-  static updateProviders?(
-    store: Store<any, any>,
-    providers: StoreMap
-  ): void
+  public props: Readonly<P>
+  public state: S;
 
-  readonly props: Readonly<P>
-  state: S;
-
-  [notifier]: Subject<this> = new Subject()
+  public [notifier]: Subject<
+    S | ((prevState: S) => S)
+  > = new Subject()
 
   constructor(props: P) {
     this.props = props
     this.state = ({} as any) as S
   }
 
-  setStatesetState(func: S | ((S) => S)) {
-    if (!this) {
-      return
-    }
+  public static updateProviders?(
+    store: Store<any, any>,
+    providers: IProviderToStoreMap
+  ): void
 
-    let newState: S
-
-    if (isFunction(func)) {
-      if (this && this.state) {
-        newState = func(this && this.state)
-      }
-    } else {
-      newState = func
-    }
-
-    if (newState && this.state) {
-      const prevState = this.state
-      this.state = newState
-
-      if (this.storeDidUpdate) {
-        this[notifier].next(
-          Object.assign(
-            Object.create(this.constructor.prototype),
-            this
-          )
-        )
-
-        this.storeDidUpdate(prevState)
-      }
-    }
+  public setState(state: S | ((prevState: S) => S)): void {
+    this[notifier].next(state)
   }
 
-  storeDidMount?(): void
-  storeDidUpdate?(prevState: S): void
-  storeWillUnmount?(): void
+  public storeDidMount?(): void
+  public storeDidUpdate?(prevState: S): void
+  public storeWillUnmount?(): void
 }
