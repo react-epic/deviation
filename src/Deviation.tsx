@@ -51,8 +51,6 @@ export class Deviation extends React.Component<
     handleError: this.props.handleError
   }
 
-  public subscription: Subscription = new Subscription()
-
   constructor(props: IDeviationProps) {
     super(props)
 
@@ -62,16 +60,6 @@ export class Deviation extends React.Component<
         this.state.providers
       )
       this.state.providers.set(provider, store)
-
-      const subscription = store[notifier].subscribe(
-        modifier => {
-          this.setState(({ providers }) => {
-            providers.set(provider, store)
-          })
-        }
-      )
-
-      this.subscription.add(subscription)
     }
   }
 
