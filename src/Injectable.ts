@@ -27,21 +27,17 @@ export function loadInjectables(
   return transform(
     injectables,
     (injectableProviers, injectable, key) => {
-      const provider = loadInjectable(
-        injectable,
-        providers
-      ) as AnyConstructorType<Store<any, any>>
+      const provider = loadInjectable(injectable, providers)
 
       if (provider) {
-        injectableProviers[key] =
-          providers.get(provider) || new provider()
+        injectableProviers[key] = provider
       }
     },
     {}
   )
 }
 
-export function loadInjectable(
+export function getInjectable(
   injectable: HybridInjectable,
   providers: IProviderToStoreMap
 ): void | Injectable {
@@ -54,5 +50,16 @@ export function loadInjectable(
      * Lazy load dependency.
      */
     return injectable(providers)
+  }
+}
+
+export function loadInjectable(
+  injectable: HybridInjectable,
+  providers: IProviderToStoreMap
+): Store<any, any> {
+  const provider = getInjectable(injectable, providers)
+
+  if (provider) {
+    return providers.get(provider) || new provider()
   }
 }
