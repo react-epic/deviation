@@ -1,20 +1,22 @@
-import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import * as Enzyme from 'enzyme'
+import * as Adapter from 'enzyme-adapter-react-16'
 
 import { JSDOM } from 'jsdom'
 
-function configureWindow() {
+declare var global: any
+
+function configureWindow(): void {
   const window = new JSDOM('').window
 
   global.window = window
   global.document = window.document
 }
 
-function configureEnzyme() {
+function configureEnzyme(): void {
   Enzyme.configure({ adapter: new Adapter() })
 }
 
-function runConfigs(configs) {
+function runConfigs(configs: Function[]): void {
   for (const config of configs) {
     config()
   }

@@ -1,9 +1,9 @@
 import { Deviation } from './Deviation'
-import { StoreMap } from './Injectable'
+import { IProviderToStoreMap } from './Injectable'
 import { Store } from './Store'
 
 interface IStoreInjectorProps {
-  providers: StoreMap
+  providers: IProviderToStoreMap
 }
 
 export class StoreInjector<S> extends Store<

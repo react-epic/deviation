@@ -5,16 +5,14 @@ import { AnyConstructorType } from './ConstructorType'
 import { Consumer, IDeviationState } from './Deviation'
 import { IStoreRecord, InjectableRecord } from './Injectable'
 
-type GetProps<T> = T extends { propTypes: infer P } ? P : never
-
 export function deviateComponent<P, S>(
-  WrappedComponent: AnyConstructorType<React.Component<P, S>>,
+  WrappedComponent: any,
   injectables: InjectableRecord,
   mergeProps: (
     injectableProviders: IStoreRecord,
     props: any
   ) => any
-): typeof WrappedComponent {
+): any {
   class WrapperComponent extends React.Component<P, S> {
     public render(): React.ReactNode {
       return <Consumer>{this.renderContext}</Consumer>

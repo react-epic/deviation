@@ -1,23 +1,19 @@
 import * as React from 'react'
 
 import { isFunction } from 'lodash-es'
-import { Subscription, noop } from 'rxjs'
+import { noop } from 'rxjs'
 
 import { AnyConstructorType } from './ConstructorType'
-import {
-  IProviderToStoreMap,
-  IStoreRecord,
-  loadInjectables
-} from './Injectable'
-import { Store, notifier } from './Store'
+import { IProviderToStoreMap } from './Injectable'
+import { Store } from './Store'
 import { StoreInjector } from './StoreInjector'
 
 import { isVariantOf } from './isVariantOf'
 
 export interface IDeviationProps {
-  providers: AnyConstructorType<Store<any, any>>[]
-  children: JSX.Element
-  handleError(e: Error): void
+  providers?: AnyConstructorType<Store<any, any>>[]
+  children?: JSX.Element
+  handleError?(e: Error): void
 }
 
 export interface IDeviationState {
@@ -46,6 +42,11 @@ export class Deviation extends React.Component<
   IDeviationProps,
   any
 > {
+  public static defaultProps: Partial<IDeviationProps> = {
+    providers: [],
+    handleError: noop
+  }
+
   public state: IDeviationState = {
     providers: new Map(),
     handleError: this.props.handleError

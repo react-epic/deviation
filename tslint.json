@@ -37,7 +37,7 @@
         "private-method-regex": "^[a-z][\\w\\d]+$",
         "protected-method-regex": "^[a-z][\\w\\d]+$",
         "static-method-regex": "^[a-z][\\w\\d]+$",
-        "function-regex": "^[a-z][\\w\\d]+$"
+        "function-regex": "^[\\w\\d]+$"
       }
     ],
     "variable-name": [
@@ -46,7 +46,9 @@
       "allow-leading-underscore",
       "allow-pascal-case",
       "ban-keywords"
-    ]
+    ],
+    "no-implicit-dependencies": [true, "dev"],
+    "no-object-literal-type-assertion": false
   },
   "rulesDirectory": []
 }

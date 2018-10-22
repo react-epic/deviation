@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Subject, Subscription } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { Subscription, noop } from 'rxjs'
 
 import {
   IProviderToStoreMap,
@@ -25,6 +24,12 @@ export class Connector extends React.Component<
   IConnectorProps,
   IConnectorState
 > {
+  public static defaultProps: Partial<IConnectorProps> = {
+    providers: new Map(),
+    injectables: {},
+    handleError: noop
+  }
+
   public state: IConnectorState = {
     providers: loadInjectables(
       this.props.injectables,

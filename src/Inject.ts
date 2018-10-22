@@ -4,16 +4,31 @@ import { deviateComponent } from './deviateComponent'
 import { deviateStore } from './deviateStore'
 import { isVariantOf } from './isVariantOf'
 
+import { AnyConstructorType } from './ConstructorType'
+import { IStoreRecord, InjectableRecord } from './Injectable'
 import { Store } from './Store'
 
-export function defaultMergeProps(injectableProviders, props) {
-  return {...injectableProviders, ...props}
+export function defaultMergeProps(
+  injectableProviders: IStoreRecord,
+  props: any
+): any {
+  return { ...injectableProviders, ...props }
 }
 
-export function Inject(injectables, mergeProps) {
-  mergeProps = mergeProps || defaultMergeProps
+export type InjectedComponentType = AnyConstructorType<
+  React.Component<any, any> | Store<any, any>
+>
 
-  return function deviate(WrappedConstructor) {
+export function Inject(
+  injectables: InjectableRecord,
+  mergeProps: (
+    injectableProviders: Record<string, Store<any, any>>,
+    props: any
+  ) => any = defaultMergeProps
+): (<T extends InjectedComponentType>(
+  WrappedConstructor: T
+) => T) {
+  return WrappedConstructor => {
     return isVariantOf(WrappedConstructor, React.Component)
       ? deviateComponent(
           WrappedConstructor,

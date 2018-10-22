@@ -1,14 +1,15 @@
-import React from 'react'
-import sinon from 'sinon'
 import { expect } from 'chai'
 import { mount } from 'enzyme'
+import * as React from 'react'
+import * as sinon from 'sinon'
+
+import { Deviation, createStoreExtractor } from '../src'
 
 import {
+  CallApp,
   CallService,
-  createMountPoint,
-  CallApp
+  createMountPoint
 } from './prepare/CallApp'
-import { createStoreExtractor, Deviation } from '../src'
 
 describe('Testing', () => {
   describe('CallApp', () => {
@@ -22,13 +23,13 @@ describe('Testing', () => {
 
       const wrapper = createMountPoint()
       const button = wrapper.find('button')
-      for (let i = 0; i < callCount; ++i) {
+      for (const i of Array.from({ length: callCount })) {
         button.prop('onClick')()
       }
 
       expect(stub.callCount).to.be.equal(callCount)
 
-      CallService.prototype.makeAPhoneCall.restore()
+      stub.restore()
     })
 
     it('should extract CallService from providers', () => {
@@ -46,7 +47,8 @@ describe('Testing', () => {
       const stub = sinon.stub(callService, 'makeAPhoneCall')
 
       const button = wrapper.find('button')
-      for (let i = 0; i < callCount; ++i) {
+
+      for (const i of Array.from({ length: callCount })) {
         button.prop('onClick')()
       }
 

@@ -14,10 +14,7 @@ export interface IStoreWrapperProps {
 
 export function deviateStore(
   WrappedStore: AnyConstructorType<Store<any, any>>,
-  injectables: Record<
-    string,
-    AnyConstructorType<Store<any, any>>
-  >,
+  injectables: InjectableRecord,
   mergeProps: (
     injectableProviders: IStoreRecord,
     props: IStoreWrapperProps

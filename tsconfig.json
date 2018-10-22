@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "sourceRoot": "src",
+    "target": "esnext",
+    "outDir": "dist",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "inlineSources": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "typeRoots": ["typings", "node_modules/@types"],
+    "allowJs": true
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules"]
+}

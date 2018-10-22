@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as React from 'react'
 
 import { createMountPoint } from './prepare/CountTodos'
 
@@ -16,18 +17,18 @@ describe('Internal DI', () => {
       ]
 
       for (const todo of newTodos) {
-        todoInput.prop('onKeyDown')({
+        todoInput.prop('onKeyDown')(({
           code: 'Enter',
           target: {
             value: todo
           }
-        })
+        } as unknown) as React.KeyboardEvent<{}>)
       }
 
       const todoCounter = wrapper.find('#todo-counter')
-      expect(Number.parseInt(todoCounter.text())).to.be.equal(
-        newTodos.length
-      )
+      expect(
+        Number.parseInt(todoCounter.text(), 10)
+      ).to.be.equal(newTodos.length)
     })
   })
 })

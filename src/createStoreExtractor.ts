@@ -1,19 +1,30 @@
-import { StoreMap } from './Injectable'
+import { AnyConstructorType } from './ConstructorType'
+import { IProviderToStoreMap, Injectable } from './Injectable'
+import { Store } from './Store'
 import { StoreInjector } from './StoreInjector'
 
-export function createStoreExtractor() {
-  class Extractor extends StoreInjector<{}> {
-    static providers: StoreMap = new Map()
+export interface IExtractorConstructor
+  extends AnyConstructorType<StoreInjector<{}>> {
+  providers: IProviderToStoreMap
+  getStore?(provider: Injectable): Store<any, any>
+  getProviders?(): IProviderToStoreMap
+}
 
-    static getStore(provider) {
+export function createStoreExtractor(): IExtractorConstructor {
+  class Extractor extends StoreInjector<{}> {
+    public static providers: IProviderToStoreMap = new Map()
+
+    public static getStore(
+      provider: Injectable
+    ): Store<any, any> {
       return this.providers.get(provider)
     }
 
-    static getProviders() {
+    public static getProviders(): IProviderToStoreMap {
       return this.providers
     }
 
-    storeDidMount() {
+    public storeDidMount(): void {
       Extractor.providers = this.props.providers
     }
   }

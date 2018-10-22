@@ -1,2 +1,3 @@
---require babel-register
---require mocha.setup.js
+--require ts-node/register
+--require mocha.setup.ts
+test/**/*.test.{ts,tsx}
