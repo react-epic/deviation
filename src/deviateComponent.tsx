@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import { Connector } from './Connector'
-import { AnyConstructorType } from './ConstructorType'
 import { Consumer, IDeviationState } from './Deviation'
 import { IStoreRecord, InjectableRecord } from './Injectable'
 

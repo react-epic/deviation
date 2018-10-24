@@ -1,6 +1,7 @@
 .fusebox
 .cache
 dist
+lib
 node_modules
 
 shrinkwrap.yaml

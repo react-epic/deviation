@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { isFunction } from 'lodash-es'
+import { isFunction } from 'lodash'
 import { noop } from 'rxjs'
 
 import { AnyConstructorType } from './ConstructorType'

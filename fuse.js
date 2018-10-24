@@ -4,23 +4,16 @@ const { task, src, exec, watch } = require('fuse-box/sparky')
 const lib = {
   name: 'deviation',
   homeDir: 'src',
-  instructions: '> [index.js]',
+  instructions: '> [index.ts]',
   output: 'lib/$name.js'
-}
-
-const test = {
-  output: 'build-test/$name.js',
-  homeDir: 'test',
-  instructions: '[**/*.{ts,tsx}]'
 }
 
 const watchOpts = {
   options: { base: 'src' },
-  glob: '**/*.{ts,tsx'
+  glob: '**/*.{ts,tsx}'
 }
 
 const targetNPM = {
-  name: lib.name,
   globals: {
     default: '*'
   },
@@ -95,14 +88,4 @@ async function buildTargetUMD() {
 
   fuse.bundle(targetUMD.name).instructions(lib.instructions)
   await fuse.run()
-}
-
-task('build:test', buildTest)
-async function buildTest() {
-  const fuse = FuseBox.init({
-    homeDir: test.homeDir,
-    output: test.output
-  })
-
-  fuse.bundle(lib.name).instructions(test.instructions)
 }

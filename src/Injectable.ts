@@ -1,4 +1,4 @@
-import { isFunction, transform } from 'lodash-es'
+import { isFunction, transform } from 'lodash'
 
 import { AnyConstructorType } from './ConstructorType'
 import { Store } from './Store'

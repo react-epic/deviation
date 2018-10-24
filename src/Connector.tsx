@@ -37,7 +37,7 @@ export class Connector extends React.Component<
     )
   }
 
-  public subscription: Subscription = null
+  public subscription: Subscription = new Subscription()
 
   public componentDidMount(): void {
     for (const [provider, store] of this.props.providers) {

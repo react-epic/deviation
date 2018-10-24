@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash-es'
+import { isFunction } from 'lodash'
 import * as React from 'react'
 
 export function enter(event: React.KeyboardEvent<{}>): boolean

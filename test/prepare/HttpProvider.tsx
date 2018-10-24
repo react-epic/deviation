@@ -18,7 +18,7 @@ export class HttpMockupProvider extends HttpProvider {
 }
 
 export interface IAppComponentProps {
-  httpProvider: HttpMockupProvider
+  httpProvider?: HttpMockupProvider
 }
 
 @Inject({

@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "sourceRoot": "src",
     "target": "esnext",
-    "outDir": "dist",
     "module": "commonjs",
     "noImplicitAny": true,
     "inlineSources": true,
@@ -13,8 +11,9 @@
     "jsx": "react",
     "importHelpers": true,
     "experimentalDecorators": true,
-    "typeRoots": ["typings", "node_modules/@types"],
-    "allowJs": true
+    "typeRoots": ["node_modules/@types"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]
