@@ -18,10 +18,10 @@ describe('Internal DI', () => {
 
       for (const todo of newTodos) {
         todoInput.prop('onKeyDown')(({
-          code: 'Enter',
           target: {
             value: todo
-          }
+          },
+          keyCode: 13
         } as unknown) as React.KeyboardEvent<{}>)
       }
 

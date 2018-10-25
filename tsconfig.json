@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "esnext",
     "module": "commonjs",
     "noImplicitAny": true,
@@ -14,7 +13,5 @@
     "typeRoots": ["node_modules/@types"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true
-  },
-  "include": ["src/**/*", "test/**/*"],
-  "exclude": ["node_modules"]
+  }
 }

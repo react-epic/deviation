@@ -60,6 +60,6 @@ export function loadInjectable(
   const provider = getInjectable(injectable, providers)
 
   if (provider) {
-    return providers.get(provider) || new provider()
+    return providers.get(provider)
   }
 }

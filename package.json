@@ -5,7 +5,7 @@
   "main": "dist/deviation.js",
   "scripts": {
     "build": "node fuse.js build",
-    "test": "mocha --opts mocha.opts test/**/*.test.{ts,tsx}",
+    "test": "gulp build:test && mocha --opts mocha.opts out/test/**/*.test.js",
     "coverage": "nyc npm run test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}"
@@ -30,19 +30,6 @@
     "react": "^16.5.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-export-default-from": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-syntax-decorators": "^7.1.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.1.0",
-    "@babel/register": "^7.0.0",
     "@types/chai": "^4.1.6",
     "@types/cheerio": "^0.22.9",
     "@types/enzyme": "^3.1.14",
@@ -55,7 +42,6 @@
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "@types/sinon": "^5.0.5",
-    "babel-plugin-lodash": "^3.3.4",
     "chai": "^4.2.0",
     "core-js": "^2.5.7",
     "enzyme": "^3.7.0",

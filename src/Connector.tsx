@@ -42,7 +42,9 @@ export class Connector extends React.Component<
   public componentDidMount(): void {
     for (const [provider, store] of this.props.providers) {
       const subscription = store[notifier].subscribe(() => {
-        this.setState(({ providers }) => ({ providers }))
+        this.setState(({ providers }) => ({
+          providers: { ...providers }
+        }))
       })
 
       this.subscription.add(subscription)
