@@ -7,10 +7,7 @@ import { IStoreRecord, InjectableRecord } from './Injectable'
 export function deviateComponent<P, S>(
   WrappedComponent: any,
   injectables: InjectableRecord,
-  mergeProps: (
-    injectableProviders: IStoreRecord,
-    props: any
-  ) => any
+  mergeProps: (stores: IStoreRecord, props: any) => any
 ): any {
   class WrapperComponent extends React.Component<P, S> {
     public render(): React.ReactNode {

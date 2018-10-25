@@ -16,7 +16,7 @@ export function deviateStore(
   WrappedStore: AnyConstructorType<Store<any, any>>,
   injectables: InjectableRecord,
   mergeProps: (
-    injectableProviders: IStoreRecord,
+    stores: IStoreRecord,
     props: IStoreWrapperProps
   ) => IStoreWrapperProps
 ): AnyConstructorType<Store<any, any>> {
@@ -24,12 +24,9 @@ export function deviateStore(
     constructor(props: IStoreWrapperProps) {
       const { providers } = props
 
-      const injectableProviders = loadInjectables(
-        injectables,
-        providers
-      )
+      const stores = loadInjectables(injectables, providers)
 
-      super(mergeProps(injectableProviders, props))
+      super(mergeProps(stores, props))
     }
 
     public static updateProviders(

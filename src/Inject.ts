@@ -9,10 +9,10 @@ import { IStoreRecord, InjectableRecord } from './Injectable'
 import { Store } from './Store'
 
 export function defaultMergeProps(
-  injectableProviders: IStoreRecord,
+  stores: IStoreRecord,
   props: any
 ): any {
-  return { ...injectableProviders, ...props }
+  return { ...stores, ...props }
 }
 
 export type InjectedComponentType = AnyConstructorType<
@@ -22,7 +22,7 @@ export type InjectedComponentType = AnyConstructorType<
 export function Inject(
   injectables: InjectableRecord,
   mergeProps: (
-    injectableProviders: Record<string, Store<any, any>>,
+    stores: IStoreRecord,
     props: any
   ) => any = defaultMergeProps
 ): (<T extends InjectedComponentType>(

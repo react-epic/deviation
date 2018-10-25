@@ -17,7 +17,7 @@ interface IConnectorProps {
 }
 
 interface IConnectorState {
-  providers: IStoreRecord
+  stores: IStoreRecord
 }
 
 export class Connector extends React.Component<
@@ -31,7 +31,7 @@ export class Connector extends React.Component<
   }
 
   public state: IConnectorState = {
-    providers: loadInjectables(
+    stores: loadInjectables(
       this.props.injectables,
       this.props.providers
     )
@@ -42,8 +42,8 @@ export class Connector extends React.Component<
   public componentDidMount(): void {
     for (const [provider, store] of this.props.providers) {
       const subscription = store[notifier].subscribe(() => {
-        this.setState(({ providers }) => ({
-          providers: { ...providers }
+        this.setState(({ stores }) => ({
+          stores: { ...stores }
         }))
       })
 
@@ -54,11 +54,11 @@ export class Connector extends React.Component<
   public render(): React.ReactNode {
     const { children } = this.props
 
-    return children(this.state.providers)
+    return children(this.state.stores)
   }
 
-  public onReInject(providers: IStoreRecord): void {
-    this.setState({ providers })
+  public onReInject(stores: IStoreRecord): void {
+    this.setState({ stores })
   }
 
   public componentDidUpdate(prevProps: IConnectorProps): void {
