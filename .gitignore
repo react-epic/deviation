@@ -6,6 +6,8 @@ lib
 out
 node_modules
 
+gulpfile.js
+
 shrinkwrap.yaml
 
 .nyc_output
