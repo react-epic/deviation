@@ -4,13 +4,26 @@
 
 [Full Changelog](https://github.com/react-epic/deviation/compare/v0.0.3...HEAD)
 
+**Fixed bugs:**
+
+- Undefined is not iterable [\#27](https://github.com/react-epic/deviation/issues/27)
+
 **Closed issues:**
 
+- Support defaultProps [\#33](https://github.com/react-epic/deviation/issues/33)
 - Build and Test Tools [\#32](https://github.com/react-epic/deviation/issues/32)
 - Toolings [\#30](https://github.com/react-epic/deviation/issues/30)
+- Allow async setState [\#29](https://github.com/react-epic/deviation/issues/29)
 - Allow local Store to take place [\#28](https://github.com/react-epic/deviation/issues/28)
+- Fix peerDependency in package.json [\#25](https://github.com/react-epic/deviation/issues/25)
 - Feat: Add error handler to Deviation [\#23](https://github.com/react-epic/deviation/issues/23)
 - Inspect the performance of Deviation [\#19](https://github.com/react-epic/deviation/issues/19)
+- Using Typescript instead of Javascript [\#18](https://github.com/react-epic/deviation/issues/18)
+- 3rd-party libraries [\#17](https://github.com/react-epic/deviation/issues/17)
+
+**Merged pull requests:**
+
+- Dev/typescript [\#26](https://github.com/react-epic/deviation/pull/26) ([clitetailor](https://github.com/clitetailor))
 
 ## [v0.0.3](https://github.com/react-epic/deviation/tree/v0.0.3) (2018-10-20)
 [Full Changelog](https://github.com/react-epic/deviation/compare/v0.0.3-0...v0.0.3)

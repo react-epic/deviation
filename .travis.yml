@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - node
+
+before_script:
+  - curl -L https://unpkg.com/@pnpm/self-installer | node
+  - pnpm install -g gulp-cli
+
+install:
+  - pnpm install
+
+branches:
+  only:
+    - master
+    - deploy/release
+    - deploy/prerelease
+
+script: pnpm test
