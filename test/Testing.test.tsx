@@ -1,34 +1,34 @@
-import React from 'react'
-import sinon from 'sinon'
 import { expect } from 'chai'
 import { mount } from 'enzyme'
+import * as React from 'react'
+import * as sinon from 'sinon'
+
+import { Deviation, createStoreExtractor } from '../src'
 
 import {
+  CallApp,
   CallService,
-  createMountPoint,
-  CallApp
+  createMountPoint
 } from './prepare/CallApp'
-import { createStoreExtractor, Deviation } from '../src'
 
 describe('Testing', () => {
   describe('CallApp', () => {
     it('should be called once', () => {
       const callCount = 3
 
-      const stub = sinon.stub(
-        CallService.prototype,
-        'makeAPhoneCall'
-      )
+      const stub = sinon.stub(CallService.prototype, 'getPhone')
 
       const wrapper = createMountPoint()
       const button = wrapper.find('button')
-      for (let i = 0; i < callCount; ++i) {
-        button.prop('onClick')()
+      for (const i of Array.from({ length: callCount })) {
+        button.prop('onClick')(
+          ({} as unknown) as React.MouseEvent<{}>
+        )
       }
 
       expect(stub.callCount).to.be.equal(callCount)
 
-      CallService.prototype.makeAPhoneCall.restore()
+      stub.restore()
     })
 
     it('should extract CallService from providers', () => {
@@ -43,11 +43,14 @@ describe('Testing', () => {
       )
 
       const callService = Extractor.getStore(CallService)
-      const stub = sinon.stub(callService, 'makeAPhoneCall')
+      const stub = sinon.stub(callService, 'getPhone')
 
       const button = wrapper.find('button')
-      for (let i = 0; i < callCount; ++i) {
-        button.prop('onClick')()
+
+      for (const i of Array.from({ length: callCount })) {
+        button.prop('onClick')(
+          ({} as unknown) as React.MouseEvent<{}>
+        )
       }
 
       expect(stub.callCount).to.be.equal(callCount)

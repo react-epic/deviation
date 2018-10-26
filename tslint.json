@@ -1,0 +1,54 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest",
+    "tslint-microsoft-contrib",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "missing-jsdoc": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-first",
+        "named-imports-order": "lowercase-last",
+        "grouped-imports": true
+      }
+    ],
+    "no-submodule-imports": false,
+    "no-unsupported-browser-code": true,
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration",
+      "array-destructuring"
+    ],
+    "no-relative-imports": false,
+    "prefer-type-cast": false,
+    "no-any": false,
+    "function-name": [
+      true,
+      {
+        "method-regex": "^[a-z][\\w\\d]+$",
+        "private-method-regex": "^[a-z][\\w\\d]+$",
+        "protected-method-regex": "^[a-z][\\w\\d]+$",
+        "static-method-regex": "^[a-z][\\w\\d]+$",
+        "function-regex": "^[\\w\\d]+$"
+      }
+    ],
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case",
+      "ban-keywords"
+    ],
+    "no-implicit-dependencies": [true, "dev"],
+    "no-object-literal-type-assertion": false
+  },
+  "rulesDirectory": []
+}

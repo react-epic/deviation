@@ -2,12 +2,18 @@
   "name": "deviation",
   "version": "0.0.3",
   "description": "A DI System for React",
-  "main": "dist/deviation.js",
+  "main": "lib/cjs/deviation.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "build": "node fuse.js build",
-    "test": "mocha --opts mocha.opts",
-    "coverage": "nyc npm run test",
-    "deploy": "npm run test && npm run build && npm publish"
+    "build": "rollup -c rollup.config.js",
+    "test": "tsc gulpfile.ts && gulp build:test && mocha --opts mocha.opts out/test/**/*.test.js",
+    "coverage": "nyc npm test",
+    "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
+    "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}",
+    "deploy": "npm run lint && npm run coverage && npm run build && npm publish",
+    "changelog": "github_changelog_generator -u react-epic -p deviation --cache_log /dev/null"
   },
   "repository": {
     "type": "git",
@@ -29,34 +35,51 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5",
-    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
+    "@types/chai": "^4.1.6",
+    "@types/enzyme": "^3.1.14",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
+    "@types/gulp": "^3.8.36",
+    "@types/gulp-sourcemaps": "^0.0.32",
+    "@types/jsdom": "^12.2.0",
+    "@types/lodash": "^4.14.117",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.0",
+    "@types/react": "^16.4.16",
+    "@types/react-dom": "^16.0.9",
+    "@types/sinon": "^5.0.5",
     "chai": "^4.2.0",
+    "core-js": "^2.5.7",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
-    "fuse-box": "^3.5.0",
-    "jsdom": "^12.1.0",
+    "esm": "^3.0.84",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^5.0.0-alpha.3",
+    "jsdom": "^12.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "regenerator-runtime": "^0.12.1",
+    "rollup": "^0.66.6",
+    "rollup-plugin-typescript": "^1.0.0",
     "rxjs": "^6.3.3",
+    "semantic-release": "^15.10.5",
     "sinon": "^6.3.5",
+    "source-map": "^0.7.3",
+    "standard-changelog": "^2.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-microsoft-contrib": "^5.2.1",
+    "tslint-react": "^3.6.0",
     "typescript": "^3.1.2"
   },
   "directories": {
-    "test": "test",
-    "dist": "dist"
+    "lib": "lib",
+    "test": "test"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "rxjs": "^6.3.3"
+    "lodash": "^4.17.11",
+    "rxjs": "^6.3.3",
+    "tslib": "^1.9.3"
   }
 }

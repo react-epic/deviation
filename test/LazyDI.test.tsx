@@ -1,13 +1,14 @@
-import React from 'react'
-import sinon from 'sinon'
 import { expect } from 'chai'
 import { mount } from 'enzyme'
+import { describe, it } from 'mocha'
+import * as React from 'react'
+import * as sinon from 'sinon'
 
 import { Deviation } from '../src'
 
 import {
-  HttpMockupProvider,
-  AppComponent
+  AppComponent,
+  HttpMockupProvider
 } from './prepare/HttpProvider'
 
 describe('Lazy DI', () => {
@@ -24,7 +25,10 @@ describe('Lazy DI', () => {
         </Deviation>
       )
 
-      expect(stub.calledOnce).to.be.true
+      expect(stub.calledOnce).to.equal(
+        true,
+        'expect getApi to be called once'
+      )
       stub.restore()
     })
   })

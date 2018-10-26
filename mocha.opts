@@ -1,2 +1,2 @@
---require babel-register
+--require esm
 --require mocha.setup.js

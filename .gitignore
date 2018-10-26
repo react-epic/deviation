@@ -1,11 +1,13 @@
 .fusebox
 .cache
-dist
+
+lib
+
+out
 node_modules
 
-shrinkwrap.yaml
+gulpfile.js
 
-# TSConfig can be generated automatically from FuseBox
-tsconfig.json
+shrinkwrap.yaml
 
 .nyc_output

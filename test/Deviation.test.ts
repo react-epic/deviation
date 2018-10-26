@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as React from 'react'
 
 import { createMountPoint } from './prepare/TodoApp'
 
@@ -16,12 +17,12 @@ describe('Deviation', () => {
       ]
 
       for (const todo of newTodos) {
-        todoInput.prop('onKeyDown')({
-          code: 'Enter',
+        todoInput.prop('onKeyDown')(({
           target: {
             value: todo
-          }
-        })
+          },
+          keyCode: 13
+        } as unknown) as React.KeyboardEvent<any>)
       }
 
       wrapper.update()
