@@ -1,6 +1,6 @@
 {
   "name": "deviation",
-  "version": "0.0.3-0",
+  "version": "0.0.3",
   "description": "A DI System for React",
   "main": "lib/cjs/deviation.js",
   "files": [
