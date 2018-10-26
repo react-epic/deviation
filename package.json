@@ -12,7 +12,8 @@
     "coverage": "nyc npm test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}",
-    "deploy": "npm run lint && npm run coverage && npm run build && npm publish"
+    "deploy": "npm run lint && npm run coverage && npm run build && npm publish",
+    "changelog": "github_changelog_generator -u react-epic -p deviation --cache_log /dev/null"
   },
   "repository": {
     "type": "git",
@@ -62,8 +63,10 @@
     "rollup": "^0.66.6",
     "rollup-plugin-typescript": "^1.0.0",
     "rxjs": "^6.3.3",
+    "semantic-release": "^15.10.5",
     "sinon": "^6.3.5",
     "source-map": "^0.7.3",
+    "standard-changelog": "^2.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-microsoft-contrib": "^5.2.1",
