@@ -18,5 +18,4 @@ before_script:
   - pnpm install -g gulp-cli
 
 script:
-  - gulp
   - pnpm test
