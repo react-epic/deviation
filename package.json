@@ -12,7 +12,7 @@
     "coverage": "nyc npm test",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}",
-    "deploy": "npm run lint && npm run coverage && npm run build && npm publish",
+    "deploy": "npm run lint && npm run coverage && npm run build && npm run changelog && semantic-release",
     "changelog": "github_changelog_generator -u react-epic -p deviation --cache_log /dev/null"
   },
   "repository": {

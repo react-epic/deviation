@@ -7,7 +7,7 @@ import {
   InjectableRecord,
   loadInjectables
 } from './Injectable'
-import { Store, notifier } from './Store'
+import { notifier } from './Store'
 
 interface IConnectorProps {
   providers?: IProviderToStoreMap
