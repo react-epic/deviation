@@ -1,4 +1,8 @@
-cd <div align="center">
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Build Status](https://travis-ci.com/react-epic/deviation.svg?branch=master)](https://travis-ci.com/react-epic/deviation)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-epic)
+
+<div align="center">
   
   <img src="images/DeviationBackground.png" width="100%" alt="Deviation"/>
 
@@ -22,6 +26,8 @@ $ npm add deviation
 ## What is Deviation?
 
 Deviation is a library that trying to simulate Angular DI model into React using RxJS and React Context API. Here is our example:
+
+[![Edit deviation-example-app](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/2wp6217v8r)
 
 ```jsx
 import { Deviation, Store, Inject } from 'deviation'
