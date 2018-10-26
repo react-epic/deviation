@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/react-epic/deviation/tree/HEAD)
-
-[Full Changelog](https://github.com/react-epic/deviation/compare/v0.0.3...HEAD)
+## [v0.1.0](https://github.com/react-epic/deviation/tree/v0.1.0) (2018-10-26)
+[Full Changelog](https://github.com/react-epic/deviation/compare/v0.0.3...v0.1.0)
 
 **Fixed bugs:**
 

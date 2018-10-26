@@ -14,7 +14,7 @@
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}",
     "preversion": "npm run lint && npm run coverage && npm run build",
-    "postversion": "npm run changelog",
+    "postversion": "git push --tags && npm run changelog",
     "prepare": "npm run lint && npm run coverage && npm run build",
     "changelog": "bash scripts/github-changelog.sh"
   },
