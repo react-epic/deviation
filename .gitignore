@@ -2,6 +2,8 @@ gulpfile.js
 .cache
 .nyc_output
 
+*.tgz
+
 out
 lib
 types
