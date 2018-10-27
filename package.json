@@ -4,8 +4,10 @@
   "description": "A DI System for React",
   "main": "lib/cjs/deviation.js",
   "module": "lib/esm/deviation.js",
+  "types": "types/index.d.js",
   "files": [
-    "lib"
+    "lib",
+    "types"
   ],
   "scripts": {
     "build": "rollup -c rollup.config.js",

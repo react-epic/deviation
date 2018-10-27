@@ -26,6 +26,7 @@ export default [
         sourcemap: true
       }
     ],
+    external: ['react', 'rxjs', 'lodash'],
     plugins: [typescript()]
   }
 ]
