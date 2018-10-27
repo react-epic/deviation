@@ -1,6 +1,6 @@
 # Change Log
 
-## [v0.1.0](https://github.com/react-epic/deviation/tree/v0.1.0) (2018-10-26)
+## [v0.1.0](https://github.com/react-epic/deviation/tree/v0.1.0) (2018-10-27)
 [Full Changelog](https://github.com/react-epic/deviation/compare/v0.0.3...v0.1.0)
 
 **Fixed bugs:**
@@ -22,6 +22,7 @@
 
 **Merged pull requests:**
 
+- Deploy/release [\#35](https://github.com/react-epic/deviation/pull/35) ([clitetailor](https://github.com/clitetailor))
 - Dev/typescript [\#26](https://github.com/react-epic/deviation/pull/26) ([clitetailor](https://github.com/clitetailor))
 
 ## [v0.0.3](https://github.com/react-epic/deviation/tree/v0.0.3) (2018-10-20)

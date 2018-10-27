@@ -1,13 +1,12 @@
-.fusebox
+gulpfile.js
 .cache
+.nyc_output
 
-lib
+*.tgz
 
 out
+lib
+types
 node_modules
 
-gulpfile.js
-
 shrinkwrap.yaml
-
-.nyc_output

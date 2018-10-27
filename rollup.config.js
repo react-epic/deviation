@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript'
+import resolve from 'rollup-plugin-node-resolve'
 
 export default [
   {
@@ -7,6 +8,11 @@ export default [
       {
         file: 'lib/cjs/deviation.js',
         format: 'cjs',
+        sourcemap: true
+      },
+      {
+        file: 'lib/esm/deviation.js',
+        format: 'esm',
         sourcemap: true
       },
       {
@@ -19,13 +25,14 @@ export default [
           react: 'react',
           lodash: 'lodash'
         }
-      },
-      {
-        file: 'lib/esm/deviation.js',
-        format: 'esm',
-        sourcemap: true
       }
     ],
-    plugins: [typescript()]
+    external: ['react', 'rxjs', 'lodash'],
+    plugins: [
+      resolve(),
+      typescript({
+        target: 'es5'
+      })
+    ]
   }
 ]
