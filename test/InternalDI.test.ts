@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { createMountPoint } from './prepare/CountTodos'
 
-describe('Internal DI', () => {
+describe('InternalDI', () => {
   describe('CountTodos', () => {
     it('should update store dependency state', () => {
       const wrapper = createMountPoint()

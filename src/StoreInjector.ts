@@ -1,5 +1,5 @@
-import { Deviation } from './Deviation'
 import { IProviderToStoreMap } from './Injectable'
+import { PureDeviation } from './PureDeviation'
 import { Store } from './Store'
 
 interface IStoreInjectorProps {
@@ -10,7 +10,7 @@ export class StoreInjector<S> extends Store<
   IStoreInjectorProps,
   S
 > {
-  constructor(deviation: Deviation) {
+  constructor(deviation: PureDeviation) {
     super({ providers: deviation.state.providers })
   }
 }

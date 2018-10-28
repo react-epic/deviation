@@ -1,6 +1,6 @@
 import { AnyConstructorType } from './ConstructorType'
-import { Deviation } from './Deviation';
 import { IProviderToStoreMap } from './Injectable'
+import { PureDeviation } from './PureDeviation';
 import { Store } from './Store'
 import { StoreInjector } from './StoreInjector'
 
@@ -17,7 +17,7 @@ export function createStoreExtractor(): IExtractorConstructor {
   class Extractor extends StoreInjector<{}> {
 
     public static providers: IProviderToStoreMap = new Map()
-    constructor(deviation: Deviation) {
+    constructor(deviation: PureDeviation) {
       super(deviation)
     }
 

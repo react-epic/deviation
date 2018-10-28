@@ -7,7 +7,6 @@ export * from './Connector'
 export * from './createStoreExtractor'
 
 export * from './isVariantOf'
-export * from './MergeProps'
 
 export * from './ConstructorType'
 export * from './deviateComponent'

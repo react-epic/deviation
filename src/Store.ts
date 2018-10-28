@@ -24,12 +24,15 @@ export class Store<P = {}, S extends Object = {}> {
   public setState(state: S | ((prevState: S) => S)): void {
     if (isFunction(state)) {
       this.state = state(this.state)
-    } else {
+    } else if (state) {
       this.state = {
         ...(this.state as object),
         ...(state as object)
       } as S
+    } else {
+      return
     }
+
     this[notifier].next()
   }
 

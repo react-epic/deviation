@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { Connector } from './Connector'
-import { Consumer, IDeviationState } from './Deviation'
 import { IStoreRecord, InjectableRecord } from './Injectable'
+import { Consumer, IPureDeviationState } from './PureDeviation'
 
 export function deviateComponent<P, S>(
   WrappedComponent: any,
@@ -14,7 +14,9 @@ export function deviateComponent<P, S>(
       return <Consumer>{this.renderContext}</Consumer>
     }
 
-    public renderContext = (context: IDeviationState) => {
+    public renderContext = (
+      context: IPureDeviationState
+    ): React.ReactNode => {
       return (
         <Connector
           providers={context.providers}

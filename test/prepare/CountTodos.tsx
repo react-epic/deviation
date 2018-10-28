@@ -59,7 +59,9 @@ export interface ICounterTodosProps {
 export class CountTodos extends React.Component<
   ICounterTodosProps
 > {
-  public handleSubmit = (event: React.KeyboardEvent<{}>): void => {
+  public handleSubmit = (
+    event: React.KeyboardEvent<{}>
+  ): void => {
     this.props.todoStore.addTodo(
       (event.target as HTMLInputElement).value
     )
