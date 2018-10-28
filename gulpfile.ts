@@ -13,8 +13,10 @@ const test = {
   dest: gulp.dest('out')
 }
 
-gulp.task('clean', () => del('out'))
+gulp.task('clean:test', () => del('out'))
 
-gulp.task('build:test', ['clean'], () =>
+gulp.task('clean:build', () => del('lib'))
+
+gulp.task('build:test', ['clean:test'], () =>
   test.src.pipe(tsProject()).js.pipe(test.dest)
 )
