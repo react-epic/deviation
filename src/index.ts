@@ -1,4 +1,5 @@
 export * from './Deviation'
+export * from './PureDeviation'
 export * from './Inject'
 export * from './Store'
 export * from './StoreInjector'
