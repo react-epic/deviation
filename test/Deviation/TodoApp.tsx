@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { Deviation, Inject, Store } from '../../src'
 
-import { enter } from './enter'
+import { enter } from '../shared/enter'
 
 export interface IStoreState {
   todos: string[]

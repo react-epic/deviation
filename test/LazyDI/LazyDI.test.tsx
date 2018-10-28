@@ -4,12 +4,12 @@ import { describe, it } from 'mocha'
 import * as React from 'react'
 import * as sinon from 'sinon'
 
-import { Deviation } from '../src'
+import { Deviation } from '../../src'
 
 import {
   AppComponent,
   HttpMockupProvider
-} from './prepare/HttpProvider'
+} from './HttpProvider'
 
 describe('Lazy DI', () => {
   describe('HttpApp', () => {

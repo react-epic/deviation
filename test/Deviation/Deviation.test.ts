@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import { ReactWrapper } from 'enzyme'
 import * as React from 'react'
 
-import { createMountPoint as createMultipleCounterMountPoint } from './prepare/MultipleCounter'
-import { createMountPoint as createTodoMountPoint } from './prepare/TodoApp'
+import { createMountPoint as createMultipleCounterMountPoint } from './MultipleCounter'
+import { createMountPoint as createTodoMountPoint } from './TodoApp'
 
 describe('Deviation', () => {
   describe('TodoApp', () => {

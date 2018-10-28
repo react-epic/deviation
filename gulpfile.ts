@@ -1,3 +1,4 @@
+import * as del from 'del'
 import * as gulp from 'gulp'
 import * as ts from 'gulp-typescript'
 
@@ -12,6 +13,8 @@ const test = {
   dest: gulp.dest('out')
 }
 
-gulp.task('build:test', () =>
+gulp.task('clean', () => del('out'))
+
+gulp.task('build:test', ['clean'], () =>
   test.src.pipe(tsProject()).js.pipe(test.dest)
 )

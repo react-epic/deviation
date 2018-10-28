@@ -3,13 +3,13 @@ import { mount } from 'enzyme'
 import * as React from 'react'
 import * as sinon from 'sinon'
 
-import { Deviation, createStoreExtractor } from '../src'
+import { Deviation, createStoreExtractor } from '../../src'
 
 import {
   CallApp,
   CallService,
   createMountPoint
-} from './prepare/CallApp'
+} from './CallApp'
 
 describe('Testing', () => {
   describe('CallApp', () => {

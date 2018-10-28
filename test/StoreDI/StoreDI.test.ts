@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import * as React from 'react'
 
-import { createMountPoint } from './prepare/CountTodos'
+import { createMountPoint } from './CountTodos'
 
-describe('InternalDI', () => {
+describe('StoreDI', () => {
   describe('CountTodos', () => {
     it('should update store dependency state', () => {
       const wrapper = createMountPoint()
