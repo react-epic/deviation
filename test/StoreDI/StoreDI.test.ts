@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 import * as React from 'react'
 
-import { createMountPoint } from './prepare/TodoApp'
+import { createMountPoint } from './CountTodos'
 
-describe('Deviation', () => {
-  describe('TodoApp', () => {
-    it('should add new todos', () => {
+describe('StoreDI', () => {
+  describe('CountTodos', () => {
+    it('should update store dependency state', () => {
       const wrapper = createMountPoint()
       const todoInput = wrapper.find('#todo-input')
 
@@ -22,14 +22,13 @@ describe('Deviation', () => {
             value: todo
           },
           keyCode: 13
-        } as unknown) as React.KeyboardEvent<any>)
+        } as unknown) as React.KeyboardEvent<{}>)
       }
 
-      wrapper.update()
-
+      const todoCounter = wrapper.find('#todo-counter')
       expect(
-        wrapper.find('#todo-list').find('li')
-      ).to.have.lengthOf(newTodos.length)
+        Number.parseInt(todoCounter.text(), 10)
+      ).to.be.equal(newTodos.length)
     })
   })
 })

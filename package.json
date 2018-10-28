@@ -6,7 +6,7 @@
   "module": "lib/esm/deviation.js",
   "types": "types/index.d.js",
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "build": "gulp clean:build && rollup -c rollup.config.js",
     "pretest": "tsc gulpfile.ts && gulp build:test",
     "test": "mocha --opts mocha.opts out/test/**/*.test.js",
     "coverage": "nyc npm test",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",
+    "@types/del": "^3.0.1",
     "@types/enzyme": "^3.1.14",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/gulp": "^3.8.36",
@@ -51,6 +52,7 @@
     "@types/sinon": "^5.0.5",
     "chai": "^4.2.0",
     "core-js": "^2.5.7",
+    "del": "^3.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "esm": "^3.0.84",

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { createMountPoint } from './prepare/CommunicateApp'
+import { createMountPoint } from './CommunicateApp'
 
 describe('Cyclic DI', () => {
   describe('CommunicateApp', () => {
