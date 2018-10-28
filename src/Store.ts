@@ -9,7 +9,7 @@ export class Store<P = {}, S extends Object = {}> {
   public props: Readonly<P>
   public state: S;
 
-  public [notifier]: Subject<any> = new Subject()
+  public [notifier]: Subject<S> = new Subject()
 
   constructor(props: P) {
     this.props = props
@@ -22,6 +22,8 @@ export class Store<P = {}, S extends Object = {}> {
   ): void
 
   public setState(state: S | ((prevState: S) => S)): void {
+    const _prevState = this.state
+
     if (isFunction(state)) {
       this.state = state(this.state)
     } else if (state) {
@@ -33,10 +35,10 @@ export class Store<P = {}, S extends Object = {}> {
       return
     }
 
-    this[notifier].next()
+    this[notifier].next(_prevState)
   }
 
   public storeDidMount?(): void
-  public storeDidUpdate?(prevState: S): void
+  public storeDidUpdate?(prevProps: P, prevState: S): void
   public storeWillUnmount?(): void
 }

@@ -1,3 +1,5 @@
+import { forEach } from 'lodash'
+
 import { AnyConstructorType } from './ConstructorType'
 import {
   IProviderToStoreMap,
@@ -5,7 +7,7 @@ import {
   InjectableRecord,
   loadInjectables
 } from './Injectable'
-import { Store } from './Store'
+import { Store, notifier } from './Store'
 
 export interface IStoreWrapperProps {
   providers?: IProviderToStoreMap
@@ -26,7 +28,26 @@ export function deviateStore(
 
       const stores = loadInjectables(injectables, providers)
 
+      forEach(stores, store => {
+        const subscription = store[notifier].subscribe(() => {
+          if (this.storeDidUpdate) {
+            const prevProps = this.props
+            this.props = { ...prevProps }
+
+            this.storeDidUpdate(prevProps, this.state)
+          }
+        })
+
+        this[notifier].subscribe(null, null, () =>
+          subscription.unsubscribe()
+        )
+      })
+
       super(mergeProps(stores, props))
+
+      this[notifier].subscribe(prevState =>
+        this.storeDidUpdate(this.props, prevState)
+      )
     }
 
     public static updateProviders(
