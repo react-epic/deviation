@@ -1,6 +1,6 @@
 {
   "name": "deviation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A DI System for React",
   "main": "lib/cjs/deviation.js",
   "module": "lib/esm/deviation.js",

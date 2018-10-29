@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.2.1](https://github.com/react-epic/deviation/tree/v0.2.1) (2018-10-29)
+[Full Changelog](https://github.com/react-epic/deviation/compare/v0.2.0...v0.2.1)
+
+**Closed issues:**
+
+- Local Deviation [\#34](https://github.com/react-epic/deviation/issues/34)
+
+**Merged pull requests:**
+
+- Deploy/release [\#39](https://github.com/react-epic/deviation/pull/39) ([clitetailor](https://github.com/clitetailor))
+
 ## [v0.2.0](https://github.com/react-epic/deviation/tree/v0.2.0) (2018-10-28)
 [Full Changelog](https://github.com/react-epic/deviation/compare/v0.1.0...v0.2.0)
 
