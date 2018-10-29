@@ -1,5 +1,8 @@
-[![Build Status](https://travis-ci.com/react-epic/deviation.svg?branch=master)](https://travis-ci.com/react-epic/deviation)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/react-epic)
+[![Build Status](https://travis-ci.com/react-epic/deviation.svg?branch=master?style=flat-square)](https://travis-ci.com/react-epic/deviation)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/react-epic/deviation)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg?style=flat-square)](https://spectrum.chat/react-epic)
+
 
 <div align="center">
   
