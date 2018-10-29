@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "module": "commonjs",
     "sourceRoot": "src",
     "declaration": true,
@@ -14,7 +14,11 @@
     "importHelpers": true,
     "experimentalDecorators": true,
     "typeRoots": ["node_modules/@types"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es6",
+      "dom"
+    ]
   },
   "files": ["src/index.ts"]
 }
