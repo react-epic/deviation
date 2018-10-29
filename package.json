@@ -6,7 +6,7 @@
   "module": "lib/esm/deviation.js",
   "types": "types/index.d.js",
   "scripts": {
-    "build": "gulp clean:build && rollup -c rollup.config.js",
+    "build": "gulp clean:build && rollup -c rollup.config.js && npm run typings",
     "pretest": "tsc gulpfile.ts && gulp build:test",
     "test": "mocha --opts mocha.opts out/test/**/*.test.js",
     "coverage": "nyc npm test",
@@ -16,7 +16,8 @@
     "preversion": "npm run lint && npm run coverage && npm run build",
     "postversion": "git push --tags && npm run changelog",
     "prepack": "npm run lint && npm run prettier && npm run coverage && npm run build",
-    "changelog": "bash scripts/github-changelog.sh"
+    "changelog": "bash scripts/github-changelog.sh",
+    "typings": "tsc -p tsconfig.json --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
