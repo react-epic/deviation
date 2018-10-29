@@ -1,3 +1,10 @@
-!lib
-!types
-!src
+gulpfile.js
+.cache
+.nyc_output
+
+*.tgz
+
+out
+node_modules
+
+shrinkwrap.yaml

@@ -15,7 +15,7 @@
     "autofix": "tslint --fix -c tslint.json {src,test}/**/*.{ts,tsx}",
     "preversion": "npm run lint && npm run coverage && npm run build",
     "postversion": "git push --tags && npm run changelog",
-    "prepack": "npm run lint && npm run prettier && npm run coverage && npm run build",
+    "prepare": "npm run lint && npm run prettier && npm run coverage && npm run build",
     "changelog": "bash scripts/github-changelog.sh",
     "typings": "tsc -p tsconfig.json --emitDeclarationOnly"
   },
