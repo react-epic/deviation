@@ -30,9 +30,7 @@ export default [
     external: ['react', 'rxjs', 'lodash'],
     plugins: [
       resolve(),
-      typescript({
-        target: 'es5'
-      })
+      typescript()
     ]
   }
 ]

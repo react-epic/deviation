@@ -15,7 +15,7 @@ export function findVariantOf(
   providers: IProviderToStoreMap
 ) => AnyConstructorType<Store<any, any>>) {
   return providers => {
-    for (const [provider] of providers) {
+    for (const [provider] of Array.from(providers)) {
       if (isVariantOf(provider, typeA)) {
         return provider
       }

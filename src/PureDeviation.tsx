@@ -57,7 +57,7 @@ export class PureDeviation extends React.Component<
   constructor(props: IPureDeviationProps) {
     super(props)
 
-    for (const provider of this.props.providers) {
+    for (const provider of Array.from(this.props.providers)) {
       const store = this.instantiate(
         provider,
         this.state.providers
@@ -82,7 +82,7 @@ export class PureDeviation extends React.Component<
 
     this.updateProviders(providers)
 
-    for (const [provider, store] of providers) {
+    for (const [provider, store] of Array.from(providers)) {
       if (isFunction(store.storeDidMount)) {
         store.storeDidMount()
       }
@@ -102,7 +102,7 @@ export class PureDeviation extends React.Component<
      * `setState` only notifies changes to components. This method
      * notifies changes to the stores.
      */
-    for (const [provider, store] of providers) {
+    for (const [provider, store] of Array.from(providers)) {
       if (
         store &&
         store.constructor &&
@@ -120,13 +120,17 @@ export class PureDeviation extends React.Component<
     prevProps: IPureDeviationProps,
     prevState: IPureDeviationState
   ): void {
-    for (const [provider, store] of prevState.providers) {
+    for (const [provider, store] of Array.from(
+      prevState.providers
+    )) {
       if (!this.state.providers.has(provider)) {
         store.storeWillUnmount()
       }
     }
 
-    for (const [provider, store] of this.state.providers) {
+    for (const [provider, store] of Array.from(
+      this.state.providers
+    )) {
       if (!prevState.providers.has(provider)) {
         store.storeDidMount()
       }
@@ -136,7 +140,9 @@ export class PureDeviation extends React.Component<
   }
 
   public componentWillUnmount(): void {
-    for (const [provider, store] of this.state.providers) {
+    for (const [provider, store] of Array.from(
+      this.state.providers
+    )) {
       if (isFunction(store.storeWillUnmount)) {
         store.storeWillUnmount()
       }
