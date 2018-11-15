@@ -1,8 +1,7 @@
 [![Build Status](https://travis-ci.com/react-epic/deviation.svg?branch=master?style=flat-square)](https://travis-ci.com/react-epic/deviation)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/react-epic/deviation)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg?style=flat-square)](https://spectrum.chat/react-epic)
-
+[![Gitter chat](https://badges.gitter.im/ReactEpic/Deviation.png)](https://gitter.im/ReactEpic/Deviation)
 
 <div align="center">
   
@@ -27,137 +26,74 @@ $ npm add deviation
 
 ## What is Deviation?
 
-Deviation is a library that trying to simulate Angular DI model into React using RxJS and React Context API. Here is our example:
+Deviation is a library for dependency injection in React using RxJS and React Context API. Deviation is largely inspired by Angular dependency injection.
 
-[![Edit deviation-example-app](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/2wp6217v8r)
+## Example
 
 ```jsx
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { Deviation, Store, Inject } from 'deviation'
 
-export class TodoStore extends Store {
+export interface ICounterStoreState {
+  counter: number;
+}
+
+export class CounterStore extends Store<
+  {},
+  ICounterStoreState
+> {
   state = {
-    todos: []
+    counter: 0
   }
 
-  addTodo(newTodo) {
-    this.setState(({ todos }) => ({
-      todos: todos.concat([newTodo])
-    }))
+  increment = () => {
+    this.setState(state => ({ counter: state.counter + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ counter: state.counter - 1 }))
   }
 }
 
-ReactDOM.render(
-  <Deviation providers={[TodoStore]}>
-    <TodoApp />
-  </Deviation>,
-  document.querySelector('#root')
-)
+export interface IAppComponentProps {
+  counterStore?: CounterStore;
+}
 
 @Inject({
-  todoStore: TodoStore
+  counterStore: CounterStore
 })
-export class TodoApp extends React.Component {
-  handleSubmit = event => {
-    this.props.todoStore.addTodo(event.target.value)
-  }
-
+export class AppComponent extends React.Component<
+  IAppComponentProps
+> {
   render() {
-    const { todoStore } = this.props
-
+    const { counterStore } = this.props
     return (
       <div>
-        <ul>
-          {todoStore.state.todos.map(todo => (
-            <li>{todo}</li>
-          ))}
-        </ul>
-        <div>
-          <label for="new-todo">New Todo:</label>
-          <input
-            name="new-todo"
-            type="input"
-            onKeyDown={enter(this.handleSubmit)}
-          />
-        </div>
+        <p>{counterStore.state.counter}</p>
+        <button onClick={counterStore.decrement}>
+          Decrement
+        </button>
+        <button onClick={counterStore.increment}>
+          Increment
+        </button>
       </div>
     )
   }
 }
-```
 
-## Store DI
-
-We can also use DI to inject directly store into store:
-
-```jsx
-@Inject({
-  balanceStore: BalanceStore
-})
-export class ContractStore extends Store {}
-```
-
-Remember, stores are injected in order. For example:
-
-```jsx
 ReactDOM.render(
-  <Deviation providers={[BalanceStore, ContractStore]}>
-    <TodoApp />
-  </Deviation>,
-  document.querySelector('#root')
-)
-```
-
-In this example, `BalanceStore` will be injected before `ContractStore`. However, if `ContractStore` is placed behind `BalanceStore` in the list of providers: `[BalanceStore, ContractStore]`, then after `ContractStore` constructor is called and before `storeDidMount` is called, `BalanceStore` will be injected into `ContractStore`.
-
-## Lazy DI and Cyclic DI
-
-Sometimes, you may need Cyclic Dependency Injection. Deviation also provides you with Cyclic DI:
-
-```jsx
-@Inject({
-  storeA: () => StoreA
-})
-export class StoreB extends Store {
-  get storeA() {
-    return this.props.storeA
-  }
-}
-
-@Inject({
-  storeB: () => StoreB
-})
-export class StoreA extends Store {
-  get storeB() {
-    return this.props.storeB
-  }
-}
-```
-
-## Testing
-
-To test on a single Store method is easy. You just have to stub or spy on that method:
-
-```jsx
-export class PhoneStore extends Store {
-  makeAPhoneCall() {}
-}
-
-const spy = sinon.spy(PhoneStore.prototype.makeAPhoneCall)
-expect(spy.calledOnce).to.be.true
-```
-
-However, we are more likely to extract the store instance from the providers. In that case, we can create a store extractor that can help us to extract any store instance from `Deviation`:
-
-```jsx
-import { createStoreExtractor } from 'deviation'
-
-const Extractor = createStoreExtractor()
-
-mount(
-  <Deviation providers={[PhoneStore, Extractor]}>
+  <Deviation providers={[CounterStore]}>
     <AppComponent />
-  </Deviation>
+  </Deviation>,
+  document.getElementById('root')
 )
-
-const phoneStore = Extractor.getStore(PhoneStore)
 ```
+
+The live version can be found here on [CodeSandbox](https://codesandbox.io/s/2wp6217v8r):
+
+[![Edit deviation-example-app](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/2wp6217v8r)
+
+## Documentation
+
+For more information about documentation please visit our homepage: https://react-epic.gitbook.io/deviation
